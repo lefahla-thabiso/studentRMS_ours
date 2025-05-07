@@ -1,12 +1,11 @@
 <?php
-chdir("../");
+chdir('../');
 session_start();
-require_once "db/config.php";
-require_once "const/school.php";
-require_once "const/check_session.php";
-require_once "const/calculations.php";
-if ($res == "1" && $level == "3") {
-} else {
+require_once('db/config.php');
+require_once('const/school.php');
+require_once('const/check_session.php');
+require_once('const/calculations.php');
+if ($res == "1" && $level == "3") {} else {
     header("location:../");
 }
 
@@ -33,19 +32,26 @@ $grading = $stmt->fetchAll();
 </head>
 
 <body class="app sidebar-mini">
-
-    <header class="app-header"><a class="app-header__logo" href="javascript:void(0);">SRMS</a>
+    <header class="app-header">
+        <a class="app-header__logo" href="javascript:void(0);">SRMS</a>
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
 
         <ul class="app-nav">
-
-            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown"
-                    aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
+            <li class="dropdown">
+                <a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu">
+                    <i class="bi bi-person fs-4"></i>
+                </a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                    <li><a class="dropdown-item" href="student/settings"><i class="bi bi-person me-2 fs-5"></i> Change
-                            Password</a></li>
-                    <li><a class="dropdown-item" href="logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i>
-                            Logout</a></li>
+                    <li>
+                        <a class="dropdown-item" href="student/settings">
+                            <i class="bi bi-person me-2 fs-5"></i> Change Password
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="logout">
+                            <i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -55,130 +61,133 @@ $grading = $stmt->fetchAll();
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
             <div>
-                <p class="app-sidebar__user-name"><?php echo $fname . " " . $lname; ?></p>
+                <p class="app-sidebar__user-name"><?php echo $fname.' '.$lname; ?></p>
                 <p class="app-sidebar__user-designation">Student</p>
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item" href="student"><i class="app-menu__icon feather icon-monitor"></i><span
-                        class="app-menu__label">Dashboard</span></a></li>
-            <li><a class="app-menu__item" href="student/view"><i class="app-menu__icon feather icon-user"></i><span
-                        class="app-menu__label">My Profile</span></a></li>
-            <li><a class="app-menu__item" href="student/subjects"><i
-                        class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">My
-                        Subjects</span></a></li>
-            <li><a class="app-menu__item active" href="student/results"><i
-                        class="app-menu__icon feather icon-file-text"></i><span class="app-menu__label">My Examination
-                        Results</span></a></li>
-            <li><a class="app-menu__item" href="student/grading-system"><i
-                        class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading
-                        System</span></a></li>
-            <li><a class="app-menu__item" href="student/division-system"><i
-                        class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division
-                        System</span></a></li>
+            <li>
+                <a class="app-menu__item" href="student">
+                    <i class="app-menu__icon feather icon-monitor"></i>
+                    <span class="app-menu__label">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="student/view">
+                    <i class="app-menu__icon feather icon-user"></i>
+                    <span class="app-menu__label">My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="student/subjects">
+                    <i class="app-menu__icon feather icon-book-open"></i>
+                    <span class="app-menu__label">My Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item active" href="student/results">
+                    <i class="app-menu__icon feather icon-file-text"></i>
+                    <span class="app-menu__label">My Examination Results</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="student/grading-system">
+                    <i class="app-menu__icon feather icon-award"></i>
+                    <span class="app-menu__label">Grading System</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="student/division-system">
+                    <i class="app-menu__icon feather icon-layers"></i>
+                    <span class="app-menu__label">Division System</span>
+                </a>
+            </li>
         </ul>
     </aside>
+
     <main class="app-content">
         <div class="app-title">
             <div>
                 <h1>My Examination Results</h1>
             </div>
-
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
                     <h4 class="tile-title">My Examination Results</h4>
+ 
+                    <?php
+                    if (WBResAvi == "1") {
+                        try {
+                            $conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
+                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    <?php if (WBResAvi == "1") {
-    try {
-        $conn = new PDO(
-            "mysql:host=" .
-                DBHost .
-                ";dbname=" .
-                DBName .
-                ";charset=" .
-                DBCharset .
-                ";collation=" .
-                DBCollation .
-                ";prefix=" .
-                DBPrefix .
-                "",
-            DBUser,
-            DBPass
-        );
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $stmt = $conn->prepare("SELECT class FROM tbl_exam_results GROUP BY class");
+                            $stmt->execute();
+                            $_classes = $stmt->fetchAll();
 
-        $stmt = $conn->prepare(
-            "SELECT class FROM tbl_exam_results GROUP BY class"
-        );
-        $stmt->execute();
-        $_classes = $stmt->fetchAll();
+                            foreach ($_classes as $key => $class) {
+                                $stmt = $conn->prepare("SELECT * FROM tbl_classes WHERE id = ?");
+                                $stmt->execute([$class[0]]);
+                                $class_de = $stmt->fetchAll();
 
-        foreach ($_classes as $key => $class) {
-            $stmt = $conn->prepare("SELECT * FROM tbl_classes WHERE id = ?");
-            $stmt->execute([$class[0]]);
-            $class_de = $stmt->fetchAll();
+                                $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND student = ? LIMIT 1");
+                                $stmt->execute([$class[0], $account_id]);
+                                $myyyyy = $stmt->fetchAll();
 
-            $stmt = $conn->prepare(
-                "SELECT * FROM tbl_exam_results WHERE class = ? AND student = ? LIMIT 1"
-            );
-            $stmt->execute([$class[0], $account_id]);
-            $myyyyy = $stmt->fetchAll();
-
-            if (count($myyyyy) > 0) {
-
-                $stmt = $conn->prepare(
-                    "SELECT term FROM tbl_exam_results WHERE class = ? GROUP BY term"
-                );
-                $stmt->execute([$class[0]]);
-                $_terms = $stmt->fetchAll();
-                ?>
+                                if (count($myyyyy) > 0) {
+                                    $stmt = $conn->prepare("SELECT term FROM tbl_exam_results WHERE class = ? GROUP BY term");
+                                    $stmt->execute([$class[0]]);
+                                    $_terms = $stmt->fetchAll();
+                                    ?>
                     <div class="col-md-12">
                         <div class="tile">
                             <div class="tile-title-w-btn">
                                 <h5 class="title"><?php echo $class_de[0][1]; ?></h5>
-
                             </div>
                             <div class="tile-body">
-
                                 <div class="bs-component">
                                     <ul class="nav nav-tabs" role="tablist">
-
                                         <?php
-$t = 1;
-foreach ($_terms as $key => $_term) {
-    $stmt = $conn->prepare("SELECT name FROM tbl_terms WHERE id = ?");
-    $stmt->execute([$_term[0]]);
-    $_term_data = $stmt->fetchAll();
+                                                        $t = 1;
+                                                        foreach ($_terms as $key => $_term) {
+                                                            $stmt = $conn->prepare("SELECT name FROM tbl_terms WHERE id = ?");
+                                                            $stmt->execute([$_term[0]]);
+                                                            $_term_data = $stmt->fetchAll();
 
-    if (
-        $t == "1"
-    ) { ?><li class="nav-item" role="presentation"><a class="nav-link active" data-bs-toggle="tab"
-                                                href="#term_<?php echo $_term[0]; ?>" aria-selected="true"
-                                                role="tab"><?php echo $_term_data[0][0]; ?></a></li><?php } else { ?><li
-                                            class="nav-item" role="presentation"><a class="nav-link"
-                                                data-bs-toggle="tab" href="#term_<?php echo $_term[0]; ?>"
-                                                aria-selected="false" tabindex="-1"
-                                                role="tab"><?php echo $_term_data[0][0]; ?></a></li><?php }
-
-    $t++;
-}
-?>
+                                                            if ($t == "1") {
+                                                                ?>
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link active" data-bs-toggle="tab"
+                                                href="#term_<?php echo $_term[0]; ?>" aria-selected="true" role="tab">
+                                                <?php echo $_term_data[0][0]; ?>
+                                            </a>
                                         </li>
+                                        <?php
+                                                            } else {
+                                                                ?>
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab"
+                                                href="#term_<?php echo $_term[0]; ?>" aria-selected="false"
+                                                tabindex="-1" role="tab">
+                                                <?php echo $_term_data[0][0]; ?>
+                                            </a>
+                                        </li>
+                                        <?php
+                                                            }
+                                                            $t++;
+                                                        }
+                                                        ?>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
-
-
                                         <?php
-$t = 1;
-
-foreach ($_terms as $key => $_term) {
-    if ($t == "1") { ?>
+                                                        $t = 1;
+                                                        foreach ($_terms as $key => $_term) {
+                                                            if ($t == "1") {
+                                                                ?>
                                         <div class="mt-3 tab-pane fade active show" id="term_<?php echo $_term[0]; ?>"
                                             role="tabpanel">
-
                                             <table class="table table-bordered table-striped table-sm">
                                                 <thead>
                                                     <tr>
@@ -190,47 +199,41 @@ foreach ($_terms as $key => $_term) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
                                                     <?php
-$stmt = $conn->prepare(
-    "SELECT * FROM tbl_subject_combinations LEFT JOIN tbl_subjects ON tbl_subject_combinations.subject = tbl_subjects.id"
-);
-$stmt->execute();
-$result = $stmt->fetchAll();
-$n = 1;
-$tscore = 0;
-$t_subjects = 0;
-$subssss = [];
+                                                                            $stmt = $conn->prepare("SELECT * FROM tbl_subject_combinations LEFT JOIN tbl_subjects ON tbl_subject_combinations.subject = tbl_subjects.id");
+                                                                            $stmt->execute();
+                                                                            $result = $stmt->fetchAll();
+                                                                            $n = 1;
+                                                                            $tscore = 0;
+                                                                            $t_subjects = 0;
+                                                                            $subssss = array();
 
-foreach ($result as $key => $row) {
-    $class_list = unserialize($row[1]);
+                                                                            foreach ($result as $key => $row) {
+                                                                                $class_list = unserialize($row[1]);
 
-    if (in_array($class[0], $class_list)) {
+                                                                                if (in_array($class[0], $class_list)) {
+                                                                                    $t_subjects++;
+                                                                                    $score = 0;
+                                                                                    $grd = "N/A";
+                                                                                    $rm = "N/A";
 
-        $t_subjects++;
-        $score = 0;
-        $grd = "N/A";
-        $rm = "N/A";
+                                                                                    $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
+                                                                                    $stmt->execute([$class[0], $row[0], $_term[0], $account_id]);
+                                                                                    $ex_result = $stmt->fetchAll();
 
-        $stmt = $conn->prepare(
-            "SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?"
-        );
-        $stmt->execute([$class[0], $row[0], $_term[0], $account_id]);
-        $ex_result = $stmt->fetchAll();
+                                                                                    if (!empty($ex_result[0][5])) {
+                                                                                        $score = $ex_result[0][5];
+                                                                                    }
+                                                                                    array_push($subssss, $score);
 
-        if (!empty($ex_result[0][5])) {
-            $score = $ex_result[0][5];
-        }
-        array_push($subssss, $score);
-
-        $tscore = $tscore + $score;
-        foreach ($grading as $grade) {
-            if ($score >= $grade[2] && $score <= $grade[3]) {
-                $grd = $grade[1];
-                $rm = $grade[4];
-            }
-        }
-        ?>
+                                                                                    $tscore = $tscore + $score;
+                                                                                    foreach ($grading as $grade) {
+                                                                                        if ($score >= $grade[2] && $score <= $grade[3]) {
+                                                                                            $grd = $grade[1];
+                                                                                            $rm = $grade[4];
+                                                                                        }
+                                                                                    }
+                                                                                    ?>
                                                     <tr>
                                                         <td><?php echo $n; ?></td>
                                                         <td><?php echo $row[6]; ?></td>
@@ -239,29 +242,26 @@ foreach ($result as $key => $row) {
                                                         <td align="center" width="200"><?php echo $rm; ?></td>
                                                     </tr>
                                                     <?php
-    }
-
-    $n++;
-}
-?>
-
+                                                                                }
+                                                                                $n++;
+                                                                            }
+                                                                            ?>
                                                 </tbody>
                                             </table>
 
                                             <?php
-if ($t_subjects == "0") {
-    $av = "0";
-} else {
-    $av = round($tscore / $t_subjects);
-}
-foreach ($grading as $grade) {
-    if ($av >= $grade[2] && $av <= $grade[3]) {
-        $grd_ = $grade[1];
-        $rm_ = $grade[4];
-    }
-}
-?>
-
+                                                                    if ($t_subjects == "0") {
+                                                                        $av = '0';
+                                                                    } else {
+                                                                        $av = round($tscore/$t_subjects);
+                                                                    }
+                                                                    foreach ($grading as $grade) {
+                                                                        if ($av >= $grade[2] && $av <= $grade[3]) {
+                                                                            $grd_ = $grade[1];
+                                                                            $rm_ = $grade[4];
+                                                                        }
+                                                                    }
+                                                                    ?>
 
                                             <p>
                                                 TOTAL SCORE <span
@@ -272,18 +272,18 @@ foreach ($grading as $grade) {
                                                     class="badge bg-secondary rounded-pill"><?php echo $grd_; ?></span>
                                                 REMARK <span
                                                     class="badge bg-secondary rounded-pill"><?php echo $rm_; ?></span>
-                                                DIVISION <span class="badge bg-secondary rounded-pill"><?php echo get_division(
-    $subssss
-); ?></span>
-                                                POINTS <span class="badge bg-secondary rounded-pill"><?php echo get_points(
-    $subssss
-); ?></span>
+                                                DIVISION <span
+                                                    class="badge bg-secondary rounded-pill"><?php echo get_division($subssss); ?></span>
+                                                POINTS <span
+                                                    class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span>
                                             </p>
 
                                             <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
-                                                class="btn btn-primary btn-sm">Save PDF</a>
+                                                class="btn btn-primary btn-sm">DOWNLOAD</a>
                                         </div>
-                                        <?php } else { ?>
+                                        <?php
+                                                            } else {
+                                                                ?>
                                         <div class="mt-3 tab-pane fade" id="term_<?php echo $_term[0]; ?>"
                                             role="tabpanel">
                                             <table class="table table-bordered table-striped table-sm">
@@ -297,47 +297,41 @@ foreach ($grading as $grade) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
                                                     <?php
-$stmt = $conn->prepare(
-    "SELECT * FROM tbl_subject_combinations LEFT JOIN tbl_subjects ON tbl_subject_combinations.subject = tbl_subjects.id"
-);
-$stmt->execute();
-$result = $stmt->fetchAll();
-$n = 1;
-$tscore = 0;
-$t_subjects = 0;
-$subssss = [];
+                                                                            $stmt = $conn->prepare("SELECT * FROM tbl_subject_combinations LEFT JOIN tbl_subjects ON tbl_subject_combinations.subject = tbl_subjects.id");
+                                                                            $stmt->execute();
+                                                                            $result = $stmt->fetchAll();
+                                                                            $n = 1;
+                                                                            $tscore = 0;
+                                                                            $t_subjects = 0;
+                                                                            $subssss = array();
 
-foreach ($result as $key => $row) {
-    $class_list = unserialize($row[1]);
+                                                                            foreach ($result as $key => $row) {
+                                                                                $class_list = unserialize($row[1]);
 
-    if (in_array($class[0], $class_list)) {
+                                                                                if (in_array($class[0], $class_list)) {
+                                                                                    $t_subjects++;
+                                                                                    $score = 0;
+                                                                                    $grd = "N/A";
+                                                                                    $rm = "N/A";
 
-        $t_subjects++;
-        $score = 0;
-        $grd = "N/A";
-        $rm = "N/A";
+                                                                                    $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
+                                                                                    $stmt->execute([$class[0], $row[0], $_term[0], $account_id]);
+                                                                                    $ex_result = $stmt->fetchAll();
 
-        $stmt = $conn->prepare(
-            "SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?"
-        );
-        $stmt->execute([$class[0], $row[0], $_term[0], $account_id]);
-        $ex_result = $stmt->fetchAll();
+                                                                                    if (!empty($ex_result[0][5])) {
+                                                                                        $score = $ex_result[0][5];
+                                                                                    }
+                                                                                    array_push($subssss, $score);
 
-        if (!empty($ex_result[0][5])) {
-            $score = $ex_result[0][5];
-        }
-        array_push($subssss, $score);
-
-        $tscore = $tscore + $score;
-        foreach ($grading as $grade) {
-            if ($score >= $grade[2] && $score <= $grade[3]) {
-                $grd = $grade[1];
-                $rm = $grade[4];
-            }
-        }
-        ?>
+                                                                                    $tscore = $tscore + $score;
+                                                                                    foreach ($grading as $grade) {
+                                                                                        if ($score >= $grade[2] && $score <= $grade[3]) {
+                                                                                            $grd = $grade[1];
+                                                                                            $rm = $grade[4];
+                                                                                        }
+                                                                                    }
+                                                                                    ?>
                                                     <tr>
                                                         <td><?php echo $n; ?></td>
                                                         <td><?php echo $row[6]; ?></td>
@@ -346,29 +340,26 @@ foreach ($result as $key => $row) {
                                                         <td align="center" width="200"><?php echo $rm; ?></td>
                                                     </tr>
                                                     <?php
-    }
-
-    $n++;
-}
-?>
-
+                                                                                }
+                                                                                $n++;
+                                                                            }
+                                                                            ?>
                                                 </tbody>
                                             </table>
 
                                             <?php
-if ($t_subjects == "0") {
-    $av = "0";
-} else {
-    $av = round($tscore / $t_subjects);
-}
-foreach ($grading as $grade) {
-    if ($av >= $grade[2] && $av <= $grade[3]) {
-        $grd_ = $grade[1];
-        $rm_ = $grade[4];
-    }
-}
-?>
-
+                                                                    if ($t_subjects == "0") {
+                                                                        $av = '0';
+                                                                    } else {
+                                                                        $av = round($tscore/$t_subjects);
+                                                                    }
+                                                                    foreach ($grading as $grade) {
+                                                                        if ($av >= $grade[2] && $av <= $grade[3]) {
+                                                                            $grd_ = $grade[1];
+                                                                            $rm_ = $grade[4];
+                                                                        }
+                                                                    }
+                                                                    ?>
 
                                             <p>
                                                 TOTAL SCORE <span
@@ -377,46 +368,37 @@ foreach ($grading as $grade) {
                                                     class="badge bg-secondary rounded-pill"><?php echo $av; ?></span>
                                                 GRADE <span
                                                     class="badge bg-secondary rounded-pill"><?php echo $grd_; ?></span>
-                                                REMARK <span class="badge bg-secondary rounded-pill"><?php echo strtoupper(
-    $rm_
-); ?></span>
-                                                DIVISION <span class="badge bg-secondary rounded-pill"><?php echo get_division(
-    $subssss
-); ?></span>
-                                                POINTS <span class="badge bg-secondary rounded-pill"><?php echo get_points(
-    $subssss
-); ?></span>
+                                                REMARK <span
+                                                    class="badge bg-secondary rounded-pill"><?php echo strtoupper($rm_); ?></span>
+                                                DIVISION <span
+                                                    class="badge bg-secondary rounded-pill"><?php echo get_division($subssss); ?></span>
+                                                POINTS <span
+                                                    class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span>
                                             </p>
 
                                             <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
-                                                class="btn btn-primary btn-sm">Save PDF</a>
+                                                class="btn btn-primary btn-sm">DOWNLOAD</a>
                                         </div>
-                                        <?php }
-
-    $t++;
-}
-?>
-
+                                        <?php
+                                                            }
+                                                            $t++;
+                                                        }
+                                                        ?>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
-
                     <?php
-            }
-        }
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
-} ?>
-
+                                }
+                            }
+                        } catch(PDOException $e) {
+                            echo "Connection failed: " . $e->getMessage();
+                        }
+                    }
+                    ?>
                 </div>
             </div>
-
         </div>
     </main>
 

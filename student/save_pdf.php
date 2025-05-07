@@ -191,7 +191,7 @@ $stmt = $conn->prepare(
 );
 $stmt->execute();
 $result = $stmt->fetchAll();
-$n = 1;
+$number_of_subjects_student_studies = 1;
 $tscore = 0;
 $t_subjects = 0;
 $subssss = [];
@@ -203,7 +203,7 @@ foreach ($result as $key => $row) {
 
         $t_subjects++;
         $score = 0;
-        $grd = "N/A";
+        $final_grade = "N/A";
         $rm = "N/A";
 
         $stmt = $conn->prepare(
@@ -220,8 +220,9 @@ foreach ($result as $key => $row) {
         $tscore = $tscore + $score;
         foreach ($grading as $grade) {
             if ($score >= $grade[2] && $score <= $grade[3]) {
-                $grd = $grade[1];
+                $final_grade = $grade[1];
                 $rm = $grade[4];
+                
             }
         }
 
@@ -230,7 +231,7 @@ foreach ($result as $key => $row) {
             '
 <tr>
 <td width="5%">' .
-            $n .
+            $number_of_subjects_student_studies .
             '</td>
 <td width="35%" >' .
             $row[6] .
@@ -239,7 +240,7 @@ foreach ($result as $key => $row) {
             $score .
             '%</td>
 <td width="20%" align="center">' .
-            $grd .
+            $final_grade .
             '</td>
 <td width="20%" align="center">' .
             $rm .
@@ -251,7 +252,7 @@ foreach ($result as $key => $row) {
 <?php
     }
 
-    $n++;
+    $number_of_subjects_student_studies++;
 }
 
 $htmls = $htmls . "</table>";
@@ -259,12 +260,12 @@ $htmls = $htmls . "</table>";
 $pdf->writeHTMLCell(0, 0, "", "", $htmls, 0, 1, 0, true, "", true);
 
 if ($t_subjects == "0") {
-    $av = "0";
+    $average = "0";
 } else {
-    $av = round($tscore / $t_subjects);
+    $average = round($tscore / $t_subjects);
 }
 foreach ($grading as $grade) {
-    if ($av >= $grade[2] && $av <= $grade[3]) {
+    if ($average >= $grade[2] && $average <= $grade[3]) {
         $grd_ = $grade[1];
         $rm_ = $grade[4];
     }
@@ -274,30 +275,22 @@ $html =
     '<table border="1" cellpadding="3" style="margin-bottom:10px;  font-size: 10px; border-collapse: collapse;" width="100%">
 <tr>
 <td ><b>TOTAL SCORE</b></td>
-<td><b>AVERAGE</b></td>
+<td><b>averageERAGE</b></td>
 <td><b>GRADE</b></td>
 <td><b>REMARK</b></td>
-<td><b>DIVISION</b></td>
-<td><b>POINTS</b></td>
 </tr>
 <tr>
 <td align="center">' .
     $tscore .
     '</td>
 <td align="center">' .
-    $av .
+    $average .
     '</td>
 <td align="center">' .
     $grd_ .
     '</td>
 <td align="center">' .
     $rm_ .
-    '</td>
-<td align="center">' .
-    get_division($subssss) .
-    '</td>
-<td align="center">' .
-    get_points($subssss) .
     '</td>
 </tr>
 </table>';
