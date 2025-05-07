@@ -14,7 +14,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $stmt = $conn->prepare("DELETE FROM tbl_subject_combinations WHERE id = ?");
 $stmt->execute([$id]);
 
-$_SESSION['reply'] = array (array("success",'Subject combination deleted successfully'));
+$_SESSION['reply'] = array (array("success",'Teacher Subject deleted successfully'));
 header("location:../combinations");
 
 }catch(PDOException $e)

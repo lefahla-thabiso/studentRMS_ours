@@ -10,7 +10,7 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <head>
-<title>SRMS - Subject Combinations</title>
+<title>SRMS - Teacher Subjects</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,7 +49,7 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
 <ul class="app-menu">
 <li><a class="app-menu__item" href="teacher"><i class="app-menu__icon feather icon-monitor"></i><span class="app-menu__label">Dashboard</span></a></li>
 <li><a class="app-menu__item" href="teacher/terms"><i class="app-menu__icon feather icon-folder"></i><span class="app-menu__label">Academic Terms</span></a></li>
-<li><a class="app-menu__item active" href="teacher/combinations"><i class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">Subject Combinations</span></a></li>
+<li><a class="app-menu__item active" href="teacher/combinations"><i class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">Teacher Subjects</span></a></li>
 <li class="treeview"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-users"></i><span class="app-menu__label">Students</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
 <ul class="treeview-menu">
 <li><a class="treeview-item" href="teacher/list_students"><i class="icon bi bi-circle-fill"></i> List Students</a></li>
@@ -69,7 +69,7 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
 <main class="app-content">
 <div class="app-title">
 <div>
-<h1>Subject Combinations</h1>
+<h1>Teacher Subjects</h1>
 </div>
 </div>
 
@@ -79,7 +79,7 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
 <div class="tile">
 <div class="tile-body">
 <div class="table-responsive">
-<h3 class="tile-title">Subject Combinations</h3>
+<h3 class="tile-title">Teacher Subjects</h3>
 <table class="table table-hover table-bordered" id="srmsTable">
 <thead>
 <tr>
