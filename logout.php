@@ -1,23 +1,36 @@
 <?php
 session_start();
-require_once('db/config.php');
+require_once "db/config.php";
 
-$session_key = $_COOKIE['__SRMS__key'];
+$session_key = $_COOKIE["__SRMS__key"];
 
 try {
-$conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = new PDO(
+        "mysql:host=" .
+            DBHost .
+            ";dbname=" .
+            DBName .
+            ";charset=" .
+            DBCharset .
+            ";collation=" .
+            DBCollation .
+            ";prefix=" .
+            DBPrefix .
+            "",
+        DBUser,
+        DBPass
+    );
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$stmt = $conn->prepare("DELETE FROM tbl_login_sessions WHERE session_key = ?");
-$stmt->execute([$session_key]);
+    $stmt = $conn->prepare(
+        "DELETE FROM tbl_login_sessions WHERE session_key = ?"
+    );
+    $stmt->execute([$session_key]);
 
- 
-setcookie("__SRMS__logged", "0", time() - 3600, '/');
-setcookie("__SRMS__key", "0", time() - 3600, '/');
-
-}catch(PDOException $e)
-{
-   echo "Connection failed: " . $e->getMessage();
+    setcookie("__SRMS__logged", "0", time() - 3600, "/");
+    setcookie("__SRMS__key", "0", time() - 3600, "/");
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
 header("location:./");
 ?>
