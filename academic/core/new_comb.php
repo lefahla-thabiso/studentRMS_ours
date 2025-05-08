@@ -40,12 +40,12 @@ if (!$hasCombination) {
 $stmt = $conn->prepare("INSERT INTO tbl_subject_combinations (class, subject, teacher, reg_date) VALUES (?,?,?,?)");
 $stmt->execute([$class, $subject, $teacher, $reg_date]);
 
-$_SESSION['reply'] = array (array("success",'Teacher Subject created successfully'));
+$_SESSION['reply'] = array (array("success",'Subject combination created successfully'));
 header("location:../combinations");
 
 }else{
 
-$_SESSION['reply'] = array (array("danger",'Teacher Subject is already created'));
+$_SESSION['reply'] = array (array("danger",'Subject combination is already created'));
 header("location:../combinations");
 
 }

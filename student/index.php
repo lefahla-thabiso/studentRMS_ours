@@ -67,7 +67,7 @@ if ($res == "1" && $level == "3") {
             <li><a class="app-menu__item" href="student/grading-system"><i
                         class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading
                         System</span></a></li>
-            <li><a class="app-menu__item" href="student/division-system"><i
+            <!-- <li><a class="app-menu__item" href="student/division-system"><i -->
                         class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division
                         System</span></a></li>
         </ul>

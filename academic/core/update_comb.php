@@ -26,7 +26,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $stmt = $conn->prepare("UPDATE tbl_subject_combinations SET class=?, subject=?, teacher=? WHERE id = ?");
 $stmt->execute([$class, $subject, $teacher, $id]);
 
-$_SESSION['reply'] = array (array("success",'Teacher Subject updated successfully'));
+$_SESSION['reply'] = array (array("success",'Subject combination updated successfully'));
 header("location:../combinations");
 
 

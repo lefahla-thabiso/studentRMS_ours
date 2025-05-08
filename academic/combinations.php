@@ -52,7 +52,7 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 
 <li><a class="app-menu__item" href="academic/classes"><i class="app-menu__icon feather icon-home"></i><span class="app-menu__label">Classes</span></a></li>
 <li><a class="app-menu__item" href="academic/subjects"><i class="app-menu__icon feather icon-book"></i><span class="app-menu__label">Subjects</span></a></li>
-<li><a class="app-menu__item active" href="academic/combinations"><i class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">Teacher Subjects</span></a></li>
+<li><a class="app-menu__item active" href="academic/combinations"><i class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">Subject Combinations</span></a></li>
 <li class="treeview"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-users"></i><span class="app-menu__label">Students</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
 <ul class="treeview-menu">
 <li><a class="treeview-item" href="academic/promote_students"><i class="icon bi bi-circle-fill"></i> Promote Students</a></li>
@@ -67,7 +67,7 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 </li>
 <li><a class="app-menu__item" href="academic/report"><i class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report Tool</span></a></li>
 <li><a class="app-menu__item" href="academic/grading-system"><i class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading System</span></a></li>
-<li><a class="app-menu__item" href="academic/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li>
+<!-- <li><a class="app-menu__item" href="academic/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li> -->
 <li><a class="app-menu__item" href="academic/announcement"><i class="app-menu__icon feather icon-bell"></i><span class="app-menu__label">Announcements</span></a></li>
 </ul>
 </aside>
@@ -188,7 +188,7 @@ echo "Connection failed: " . $e->getMessage();
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title" id="editModalLabel">Edit Teacher Subject</h5>
+<h5 class="modal-title" id="editModalLabel">Edit Subject Combination</h5>
 </div>
 <div class="modal-body" id="comb_feedback">
 
@@ -203,7 +203,7 @@ echo "Connection failed: " . $e->getMessage();
 <div class="tile">
 <div class="tile-body">
 <div class="table-responsive">
-<h3 class="tile-title">Teacher Subjects</h3>
+<h3 class="tile-title">Subject Combinations</h3>
 <table class="table table-hover table-bordered" id="srmsTable">
 <thead>
 <tr>
@@ -262,7 +262,7 @@ $st++;
 <td><?php echo $row[4]; ?></td>
 <td align="center">
 <a onclick="set_combination('<?php echo $row[0]; ?>');" class="btn btn-primary btn-sm" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-<a onclick="del('academic/core/drop_comb?id=<?php echo $row[0]; ?>', 'Delete Teacher Subject?');" class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a>
+<a onclick="del('academic/core/drop_comb?id=<?php echo $row[0]; ?>', 'Delete Subject Combination?');" class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a>
 </td>
 </tr>
 <?php
