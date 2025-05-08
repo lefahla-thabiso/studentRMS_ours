@@ -96,12 +96,12 @@ $grading = $stmt->fetchAll();
                     <span class="app-menu__label">Grading System</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a class="app-menu__item" href="student/division-system">
                     <i class="app-menu__icon feather icon-layers"></i>
                     <span class="app-menu__label">Division System</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </aside>
 
@@ -116,7 +116,7 @@ $grading = $stmt->fetchAll();
             <div class="col-md-12">
                 <div class="tile">
                     <h4 class="tile-title">My Examination Results</h4>
- 
+
                     <?php
                     if (WBResAvi == "1") {
                         try {
@@ -272,10 +272,10 @@ $grading = $stmt->fetchAll();
                                                     class="badge bg-secondary rounded-pill"><?php echo $grd_; ?></span>
                                                 REMARK <span
                                                     class="badge bg-secondary rounded-pill"><?php echo $rm_; ?></span>
-                                                DIVISION <span
+                                                <!-- DIVISION <span
                                                     class="badge bg-secondary rounded-pill"><?php echo get_division($subssss); ?></span>
                                                 POINTS <span
-                                                    class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span>
+                                                    class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> -->
                                             </p>
 
                                             <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
@@ -370,10 +370,10 @@ $grading = $stmt->fetchAll();
                                                     class="badge bg-secondary rounded-pill"><?php echo $grd_; ?></span>
                                                 REMARK <span
                                                     class="badge bg-secondary rounded-pill"><?php echo strtoupper($rm_); ?></span>
-                                                DIVISION <span
+                                                <!-- DIVISION <span
                                                     class="badge bg-secondary rounded-pill"><?php echo get_division($subssss); ?></span>
                                                 POINTS <span
-                                                    class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span>
+                                                    class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> -->
                                             </p>
 
                                             <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
