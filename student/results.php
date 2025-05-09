@@ -145,7 +145,10 @@
                                 $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND student = ? LIMIT 1");
                                 $stmt->execute([$class[0], $account_id]);
                                 $myyyyy = $stmt->fetchAll();
-
+                                 
+                                echo "____";
+                                echo $account_id;
+                                echo "____";
                               
                                 // echo " | ";
                                 // echo $myyyyy[0][0];
