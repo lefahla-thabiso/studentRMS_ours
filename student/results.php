@@ -119,7 +119,7 @@
                     <h4 class="tile-title">My Examination Results</h4>
 
                     <?php
-                    if (WBResAvi == "1") {
+                    // if (WBResAvi == "1") {
                         try {
                             $conn = new PDO(
                                 'mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', 
@@ -130,55 +130,30 @@
 
                             $stmt = $conn->prepare("SELECT class FROM tbl_exam_results GROUP BY class");
                             $stmt->execute();
-                            $_classes = $stmt->fetchAll();
-
-                            foreach ($_classes as $key => $class) {
-                                $stmt = $conn->prepare("SELECT * FROM tbl_classes WHERE id = ?");
-                                echo ($class[0]);//here1
-                                $stmt->execute([$class[0]]);
-                                $class_de = $stmt->fetchAll(); //In which class isthe student
-                                echo " | ";
-                                echo ($class_de[0][0]);
-                                echo ($class_de[0][1]);
-                                echo ($class_de[0][2]);
+                            $_classes = $stmt->fetchAll(); //take all classes id from tbl_exam_results
+                           
+                            // foreach ($_classes as $key => $class) { 
+                                $stmt = $conn->prepare("SELECT * FROM tbl_classes WHERE id = ?");  
+                                $stmt->execute([$class]);
+                                $class_de = $stmt->fetchAll(); // take rows of corresponding 
 
                                 $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND student = ? LIMIT 1");
-                                $stmt->execute([$class[0], $account_id]);
-                                $myyyyy = $stmt->fetchAll();
-                                 
-                                echo "____";
-                                echo $account_id;
-                                echo "____";
-                              
-                                // echo " | ";
-                                // echo $myyyyy[0][0];
-                                // echo " ";
-                                // echo $myyyyy[0][1];
-                                // echo " ";
-                                // echo $myyyyy[0][2];
-                                // echo " ";
-                                // echo $myyyyy[0][3];                            
-                                // echo " ";
-                                // echo $myyyyy[0][4];                               
-                                // echo " ";
-                                // echo $myyyyy[0][5];
-
-                                echo " & ";
-                                echo count($myyyyy);
-
-                                if (count($myyyyy) > 0) {
+                                $stmt->execute([$class, $account_id]);
+                                // take all the mark of the logged student for his/her class(form one, form two......)
+                                $student_has_marks_for_exams = $stmt->fetchAll(); 
+       
+                                // var_dump(count($student_has_marks_for_exams));
+                                if (count($student_has_marks_for_exams) > 0) {
                                     $stmt = $conn->prepare("SELECT term FROM tbl_exam_results WHERE class = ? GROUP BY term");
-                                    $stmt->execute([$class[0]]);
-                                    $_terms = $stmt->fetchAll(); // which term is the student in
-                                    echo " = ";
-                                    echo $_terms[0][0];
-
+                                    $stmt->execute([$class]);
+                                    $_terms = $stmt->fetchAll(); // take all the terms of which the student has results for
+                                    
                                     ?>
-                                    <div class="col-md-12">
-                                        <div class="tile">
+                                    <div class="col-md-12" >
+                                        <div class="tile" >
                                             <div class="tile-title-w-btn">
                                                 <!-- heading display which class is the student in -->
-                                                <h5 class="title"><?php echo $class_de[0][1]; ?></h5>
+                                                <h5 class="title"><?php echo$class_de[0][1]; ?></h5>
                                             </div>
                                             <div class="tile-body">
                                                 <div class="bs-component">
@@ -191,9 +166,7 @@
                                                         foreach ($_terms as $key => $_term) {
                                                             $stmt = $conn->prepare("SELECT name FROM tbl_terms WHERE id = ?");
                                                             $stmt->execute([$_term[0]]);
-                                                            $_term_data = $stmt->fetchAll();
-                                                            echo $_term[0];
-                                                            // echo $_term_data[0][0];
+                                                            $_term_data = $stmt->fetchAll(); 
 
                                                             if ($t == "1") {
                                                                 ?>
@@ -205,7 +178,8 @@
                                                                     </a>
                                                                 </li>
                                                                 <?php
-                                                            } else {
+                                                            }
+                                                             else {
                                                                 ?>
                                                                 <li class="nav-item" role="presentation">
                                                                     <a class="nav-link" data-bs-toggle="tab"
@@ -230,9 +204,9 @@
                                                                      role="tabpanel">
                                                                     <table class="table table-bordered table-striped table-sm">
                                                                         <thead>
-                                                                            <tr>
+                                                                        <tr style="text-align: center;" >
                                                                                 <th width="40">#</th>
-                                                                                <th>SUBJECT</th>
+                                                                                <th width = "60">SUBJECT</th>
                                                                                 <th>SCORE (%)</th>
                                                                                 <th>GRADE</th>
                                                                                 <th>REMARK</th>
@@ -249,16 +223,16 @@
                                                                             $subssss = array();
 
                                                                             foreach ($result as $key => $row) {
-                                                                                $class_list = unserialize($row[1]);
+                                                                               $class_list = unserialize($row[1]);
 
-                                                                                if (in_array($class[0], $class_list)) {
+                                                                                if (in_array($class,$class_list)) {
                                                                                     $t_subjects++;
                                                                                     $score = 0;
                                                                                     $grd = "N/A";
                                                                                     $rm = "N/A";
 
                                                                                     $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
-                                                                                    $stmt->execute([$class[0], $row[0], $_term[0], $account_id]);
+                                                                                    $stmt->execute([$class, $row[0], $_term[0], $account_id]);
                                                                                     $ex_result = $stmt->fetchAll();
 
                                                                                     if (!empty($ex_result[0][5])) {
@@ -277,9 +251,9 @@
                                                                                     <tr>
                                                                                         <td><?php echo $n; ?></td>
                                                                                         <td><?php echo $row[6]; ?></td>
-                                                                                        <td align="center" width="100"><?php echo $score; ?></td>
-                                                                                        <td align="center" width="100"><?php echo $grd; ?></td>
-                                                                                        <td align="center" width="200"><?php echo $rm; ?></td>
+                                                                                        <td align="center" width="100"><?php if($score != 0) echo $score; ?></td>
+                                                                                        <td align="center" width="100"><?php if($score != 0) echo $grd; ?></td>
+                                                                                        <td align="center" width="200"><?php if($score != 0) echo $rm; ?></td>
                                                                                     </tr
                                                                                     <?php
                                                                                 }
@@ -305,13 +279,13 @@
 
                                                                     <p>
                                                                         TOTAL SCORE <span
-                                                                            class="badge bg-secondary rounded-pill"><?php echo $tscore; ?></span>
+                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0) echo $tscore; else echo " - "; ?></span>
                                                                         AVERAGE <span
-                                                                            class="badge bg-secondary rounded-pill"><?php echo $av; ?></span>
+                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0) echo $av; else echo " - ";  ?></span>
                                                                         GRADE <span
-                                                                            class="badge bg-secondary rounded-pill"><?php echo $grd_; ?></span>
+                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo $grd_; else echo " - "; ?></span>
                                                                         REMARK <span
-                                                                            class="badge bg-secondary rounded-pill"><?php echo $rm_; ?></span>
+                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0) echo $rm_; else echo " - ";  ?></span>
                                                                         <!-- DIVISION <span
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_division($subssss); ?></span>
                                                                         POINTS <span
@@ -322,15 +296,15 @@
                                                                        class="btn btn-primary btn-sm">DOWNLOAD</a>
                                                                 </div>
                                                                 <?php
-                                                            } else {
+                                                             } else {
                                                                 ?>
                                                                 <div class="mt-3 tab-pane fade" id="term_<?php echo $_term[0]; ?>"
                                                                      role="tabpanel">
                                                                     <table class="table table-bordered table-striped table-sm">
                                                                         <thead>
-                                                                            <tr>
+                                                                            <tr style="text-align: center;" >
                                                                                 <th width="40">#</th>
-                                                                                <th>SUBJECT</th>
+                                                                                <th width = "60">SUBJECT</th>
                                                                                 <th>SCORE (%)</th>
                                                                                 <th>GRADE</th>
                                                                                 <th>REMARK</th>
@@ -347,16 +321,16 @@
                                                                             $subssss = array();
 
                                                                             foreach ($result as $key => $row) {
-                                                                                $class_list = unserialize($row[1]);
+                                                                               $class_list = unserialize($row[1]);
 
-                                                                                if (in_array($class[0], $class_list)) {
+                                                                                if (in_array($class,$class_list)) {
                                                                                     $t_subjects++;
                                                                                     $score = 0;
                                                                                     $grd = "N/A";
                                                                                     $rm = "N/A";
 
                                                                                     $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
-                                                                                    $stmt->execute([$class[0], $row[0], $_term[0], $account_id]);
+                                                                                    $stmt->execute([$class, $row[0], $_term[0], $account_id]);
                                                                                     $ex_result = $stmt->fetchAll();
 
                                                                                     if (!empty($ex_result[0][5])) {
@@ -376,7 +350,7 @@
                                                                                         <td><?php echo $n; ?></td>
                                                                                         <td><?php echo $row[6]; ?></td>
                                                                                          
-                                                                                        <td align="center" width="100"><?php if($score) echo $score;?></td>
+                                                                                        <td align="center" width="100"><?php if($score != 0) echo $score;?></td>
                                                                                         <td align="center" width="100"><?php if($score) echo $grd; ?></td>
                                                                                         <td align="center" width="200"><?php if($score) echo $rm; ?></td>
                                                                                     </tr>
@@ -442,12 +416,16 @@
                                         </div>
                                     </div>
                                     <?php
+                                }else{
+                                    ?>
+                                      <p style ="font-size = '90';"> RESULTS NOT AVAILABLE, CHECK ANNOUNCEMENTS ONCE AVAILABLE</p>
+                                <?php
                                 }
-                            }
+                             //END FOREACH
                         } catch(PDOException $e) {
                             echo "Connection failed: " . $e->getMessage();
                         }
-                    }
+                    // }
                     ?>
                 </div>
             </div>
