@@ -5,6 +5,21 @@
     require_once('const/school.php');
     require_once('const/check_session.php');
     require_once('const/calculations.php');
+    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //     // Get values from both select fields
+    //     $student = $_POST['yearofstudy']; // Value from student select
+    //          // Value from term select
+        
+    //     // Now $student and $term variables contain the selected values
+    //     var_dump($student);
+    //     print_r($student);
+    //     // You can use these variables as needed
+    //     echo "Selected Student ID: " . $student; 
+        
+     
+    //     // Continue with your processing...
+    // }
+   
     if ($res == "1" && $level == "3") {
         // Continue execution
     } else {
@@ -20,7 +35,7 @@
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 	<head>
-		<title>SRMS - My Examination Results</title>
+		<title>SRMS - Vieiwng past Resultss</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,11 +110,90 @@
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1>My Examination Results</h1>
+                <h1>Vieiwng past Results</h1>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: -1%;">
+            <div class="col-md-4 center_form" >
+                <div class="tile">
+                    <h4 class="tile-title">Vieiwng past Results</h4>
+
+                    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get values from both select fields
+        $student = $_POST['yearofstudy']; // Value from student select
+       
+        echo "Selected Student ID: " . $student; 
+        
+     
+        // Continue with your processing...
+    }
+   
+                    ?>
+                <form e<form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="app_frm" method="POST" autocomplete="OFF" id="form_result" >
+                                        <div class="mb-2">
+                                            <label class="form-label"><b>Select Class</b></label>
+                                            <select class="form-control select2" name="yearofstudy" required style="width: 100%;">
+                                                <option value="" selected disabled> Select One</option>
+                                                <?php try {
+                                    $conn = new PDO(
+                                        "mysql:host=" .
+                                            DBHost .
+                                            ";dbname=" .
+                                            DBName .
+                                            ";charset=" .
+                                            DBCharset .
+                                            ";collation=" .
+                                            DBCollation .
+                                            ";prefix=" .
+                                            DBPrefix .
+                                            "",
+                                        DBUser,
+                                        DBPass
+                                    );
+                                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    // selecting past student marks from previous classes using class id's
+                                    $stmt = $conn->prepare("SELECT  class FROM tbl_exam_results WHERE student = ? AND class != ? GROUP BY class");
+                                    $stmt->execute([$account_id,$class]);
+                                    $class_id_list = $stmt->fetchAll(); 
+                                    
+                                    if(count($class_id_list) > 0){                     
+                                    foreach ($class_id_list as $id) {
+                                        // taking the names of classes using their id's
+                                        $stmt = $conn->prepare("SELECT name from tbl_classes WHERE id = ?");
+                                        $stmt->execute([$id[0]]);
+                                        $result = $stmt->fetchAll(); 
+
+                                        foreach ($result as $row) { ?>
+                                            <option value="<?php echo $id[0];?>">
+                                                <!-- populating the names of the classes in dropdown bow -->
+                                            <?php  echo $row[0] ?>
+                                        
+                                        </option>
+                                        <?php
+                                        }
+                                        ?> 
+                                        
+                                        <?php 
+                                    }
+                                    }
+                                    } catch (PDOException $e) {
+                                    echo "Connection failed: " . $e->getMessage();
+                                    } ?>
+                                            </select>
+                                        </div>
+                                    
+                                <div class="text-center" style = "margin-top: 20px;">
+                                    <button class="btn btn-primary app_btn" type="submit">View Results</button>
+                                </div>
+            </form>
+
+            
+            </div>
+        </div>
+        <div class="row" id="tableresults">
             <div class="col-md-12">
                 <div class="tile">
                     <h4 class="tile-title">My Examination Results</h4>
@@ -395,23 +489,24 @@
                         }
                     // }
                     ?>
-					</div>
-				</div>
-			</div>
-		</main>
-		<script src="js/jquery-3.7.0.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/main.js"></script>
-		<script src="loader/waitMe.js"></script>
-		<script src="js/forms.js"></script>
-		<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
-		<script type="text/javascript">
-		$('#srmsTable').DataTable({
-			"sort": false
-		});
-		</script>
-		<script src="js/sweetalert2@11.js"></script>
-	</body>
+                    </div>
+                    </div>
+                    </div>
+    </div>
+</main>
+<script src="js/jquery-3.7.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script src="loader/waitMe.js"></script>
+<script src="js/forms.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
+<script type="text/javascript">
+$('#srmsTable').DataTable({
+    "sort": false
+});
+</script>
+<script src="js/sweetalert2@11.js"></script>
+</body>
 
-	</html>
+</html>
