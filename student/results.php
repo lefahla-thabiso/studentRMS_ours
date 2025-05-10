@@ -15,89 +15,76 @@
     $stmt->execute();
     $grading = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<!DOCTYPE html>
+	<html lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
-<head>
-    <title>SRMS - My Examination Results</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="../">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="icon" href="images/icon.ico">
-    <link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
-    <link type="text/css" rel="stylesheet" href="loader/waitMe.css">
-</head>
+	<head>
+		<title>SRMS - My Examination Results</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<base href="../">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="icon" href="images/icon.ico">
+		<link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
+		<link rel="stylesheet" href="cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
+		<link type="text/css" rel="stylesheet" href="loader/waitMe.css"> </head>
 
-<body class="app sidebar-mini">
-    <header class="app-header">
-        <a class="app-header__logo" href="javascript:void(0);">SRMS</a>
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-
-        <ul class="app-nav">
-            <li class="dropdown">
-                <a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu">
-                    <i class="bi bi-person fs-4"></i>
-                </a>
-                <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                    <li>
-                        <a class="dropdown-item" href="student/settings">
-                            <i class="bi bi-person me-2 fs-5"></i> Change Password
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="logout">
-                            <i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </header>
-
-    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <aside class="app-sidebar">
-        <div class="app-sidebar__user">
-            <div>
-                <p class="app-sidebar__user-name"><?php echo $fname.' '.$lname; ?></p>
-                <p class="app-sidebar__user-designation">Student</p>
-            </div>
-        </div>
-        <ul class="app-menu">
-            <li>
-                <a class="app-menu__item" href="student">
-                    <i class="app-menu__icon feather icon-monitor"></i>
-                    <span class="app-menu__label">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="student/view">
-                    <i class="app-menu__icon feather icon-user"></i>
-                    <span class="app-menu__label">My Profile</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="student/subjects">
-                    <i class="app-menu__icon feather icon-book-open"></i>
-                    <span class="app-menu__label">My Subjects</span>
-                </a>
-            </li>
-            <li>
+	<body class="app sidebar-mini">
+		<header class="app-header"> <a class="app-header__logo" href="javascript:void(0);">SRMS</a>
+			<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+			<ul class="app-nav">
+				<li class="dropdown">
+					<a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu"> <i class="bi bi-person fs-4"></i> </a>
+					<ul class="dropdown-menu settings-menu dropdown-menu-right">
+						<li>
+							<a class="dropdown-item" href="student/settings"> <i class="bi bi-person me-2 fs-5"></i> Change Password </a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="logout"> <i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout </a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</header>
+		<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+		<aside class="app-sidebar">
+			<div class="app-sidebar__user">
+				<div>
+					<p class="app-sidebar__user-name">
+						<?php echo $fname.' '.$lname; ?>
+					</p>
+					<p class="app-sidebar__user-designation">Student</p>
+				</div>
+			</div>
+			<ul class="app-menu">
+				<li>
+					<a class="app-menu__item" href="student"> <i class="app-menu__icon feather icon-monitor"></i> <span class="app-menu__label">Dashboard</span> </a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="student/view"> <i class="app-menu__icon feather icon-user"></i> <span class="app-menu__label">My Profile</span> </a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="student/subjects"> <i class="app-menu__icon feather icon-book-open"></i> <span class="app-menu__label">My Subjects</span> </a>
+				</li>
+				<!-- <li>
                 <a class="app-menu__item active" href="student/results">
                     <i class="app-menu__icon feather icon-file-text"></i>
                     <span class="app-menu__label">My Examination Results</span>
                 </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="student/grading-system">
-                    <i class="app-menu__icon feather icon-award"></i>
-                    <span class="app-menu__label">Grading System</span>
-                </a>
-            </li>
-            <!-- <li>
+            </li> -->
+				<li class="treeview"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-file-text"></i><span class="app-menu__label">Examination Results</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+					<ul class="treeview-menu">
+						<li><a class="treeview-item" href="student/results"><i class="icon bi bi-circle-fill"></i>My <?php echo date("Y");?> Results</a></li>
+						<li><a class="treeview-item" ><i class="icon bi bi-circle-fill"></i> Previous Years Results</a></li>
+						<li><a class="treeview-item" ><i class="icon bi bi-circle-fill"></i> Import Results</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="app-menu__item" href="student/grading-system"> <i class="app-menu__icon feather icon-award"></i> <span class="app-menu__label">Grading System</span> </a>
+				</li>
+				<!-- <li>
                 <a class="app-menu__item" href="student/division-system">
                     <i class="app-menu__icon feather icon-layers"></i>
                     <span class="app-menu__label">Division System</span>
@@ -181,21 +168,19 @@
                                                             }
                                                              else {
                                                                 ?>
-                                                                <li class="nav-item" role="presentation">
-                                                                    <a class="nav-link" data-bs-toggle="tab"
-                                                                       href="#term_<?php echo $_term[0]; ?>" aria-selected="false"
-                                                                       tabindex="-1" role="tab">
-                                                                        <?php echo $_term_data[0][0]; ?>
-                                                                    </a>
-                                                                </li>
-                                                                <?php
+														<li class="nav-item" role="presentation">
+															<a class="nav-link" data-bs-toggle="tab" href="#term_<?php echo $_term[0]; ?>" aria-selected="false" tabindex="-1" role="tab">
+																<?php echo $_term_data[0][0]; ?>
+															</a>
+														</li>
+														<?php
                                                             }
                                                             $t++;
                                                         }
                                                         ?>
-                                                    </ul>
-                                                    <div class="tab-content" id="myTabContent">
-                                                        <?php
+											</ul>
+											<div class="tab-content" id="myTabContent">
+												<?php
                                                         $t = 1;
                                                         foreach ($_terms as $key => $_term) {
                                                             if ($t == "1") {
@@ -359,10 +344,9 @@
                                                                                 $n++;
                                                                             }
                                                                             ?>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                    <?php
+																</tbody>
+															</table>
+															<?php
                                                                     if ($t_subjects == "0") {
                                                                         $av = '0';
                                                                     } else {
@@ -375,37 +359,22 @@
                                                                         }
                                                                     }
                                                                     ?>
-
-                                                                    <p>
-                                                                        TOTAL SCORE <span
-                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0) echo $tscore; else echo " - ";?></span>
-                                                                        AVERAGE <span
-                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo $av; else echo " - "; ?></span>
-                                                                        GRADE <span
-                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo $grd_; else echo " - ";  ?></span>
-                                                                        REMARK <span
-                                                                            class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo strtoupper($rm_); else echo " - "; ?></span>
-                                                                        <!-- DIVISION <span
+																<p> TOTAL SCORE <span class="badge bg-secondary rounded-pill"><?php if($tscore != 0) echo $tscore; else echo " - ";?></span> AVERAGE <span class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo $av; else echo " - "; ?></span> GRADE <span class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo $grd_; else echo " - ";  ?></span> REMARK <span class="badge bg-secondary rounded-pill"><?php if($tscore != 0)  echo strtoupper($rm_); else echo " - "; ?></span>
+																	<!-- DIVISION <span
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_division($subssss); ?></span>
                                                                         POINTS <span
-                                                                            class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> -->
-                                                                    </p>
-                                                                    <?php
+                                                                            class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> --></p>
+																<?php
                                                                     if($tscore != 0){
-                                                                        ?>
-                                                                         <a target="_blank"  href="student/save_pdf?term=<?php echo $_term[0]; ?>"
-                                                                       class="btn btn-primary btn-sm ">DOWNLOAD</a>
-                                                                       <?php
+                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm ">DOWNLOAD</a>
+																	<?php
                                                                     }else{
-                                                                        ?>
-                                                                          <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
-                                                                          class="btn btn-primary btn-sm disabled">DOWNLOAD</a>
-                                                                        <?php
+                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm disabled">DOWNLOAD</a>
+																		<?php
                                                                     }
                                                                     ?>
-                                                                   
-                                                                </div>
-                                                                <?php
+														</div>
+														<?php
                                                             }
                                                             $t++;
                                                         }
@@ -427,24 +396,23 @@
                         }
                     // }
                     ?>
-                </div>
-            </div>
-        </div>
-    </main>
+					</div>
+				</div>
+			</div>
+		</main>
+		<script src="js/jquery-3.7.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="loader/waitMe.js"></script>
+		<script src="js/forms.js"></script>
+		<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
+		<script type="text/javascript">
+		$('#srmsTable').DataTable({
+			"sort": false
+		});
+		</script>
+		<script src="js/sweetalert2@11.js"></script>
+	</body>
 
-    <script src="js/jquery-3.7.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="loader/waitMe.js"></script>
-    <script src="js/forms.js"></script>
-    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
-    <script type="text/javascript">
-        $('#srmsTable').DataTable({
-            "sort": false
-        });
-    </script>
-    <script src="js/sweetalert2@11.js"></script>
-</body>
-
-</html>
+	</html>
