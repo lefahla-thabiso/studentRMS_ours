@@ -1,10 +1,13 @@
 <?php
-chdir('../');
+chdir("../");
 session_start();
-require_once('db/config.php');
-require_once('const/school.php');
-require_once('const/check_session.php');
-if ($res == "1" && $level == "1") {}else{header("location:../");}
+require_once "db/config.php";
+require_once "const/school.php";
+require_once "const/check_session.php";
+if ($res == "1" && $level == "1") {
+} else {
+    header("location:../");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +45,7 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 <aside class="app-sidebar">
 <div class="app-sidebar__user">
 <div>
-<p class="app-sidebar__user-name"><?php echo $fname.' '.$lname; ?></p>
+<p class="app-sidebar__user-name"><?php echo $fname . " " . $lname; ?></p>
 <p class="app-sidebar__user-designation">Academic</p>
 </div>
 </div>
@@ -92,35 +95,42 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 <label class="form-label">Select Class</label>
 <select class="form-control select2" name="class" required style="width: 100%;">
 <option value="" selected disabled> Select One</option>
-<?php
-try {
-$conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+<?php try {
+    $conn = new PDO(
+        "mysql:host=" .
+            DBHost .
+            ";dbname=" .
+            DBName .
+            ";charset=" .
+            DBCharset .
+            ";collation=" .
+            DBCollation .
+            ";prefix=" .
+            DBPrefix .
+            "",
+        DBUser,
+        DBPass
+    );
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$stmt = $conn->prepare("SELECT * FROM tbl_classes");
-$stmt->execute();
-$result = $stmt->fetchAll();
+    $stmt = $conn->prepare("SELECT * FROM tbl_classes");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
 
-foreach($result as $row)
-{
+    foreach ($result as $row) {
+        // $stmt = $conn->prepare("SELECT * FROM tbl_students WHERE class = ?");
+        // $stmt->execute([$row[0]]);
+        $stmt = $conn->prepare("SELECT * FROM tbl_students");
+        $stmt->execute();
+        $resultr = $stmt->fetchAll();
 
-$stmt = $conn->prepare("SELECT * FROM tbl_students WHERE class = ?");
-$stmt->execute([$row[0]]);
-$resultr = $stmt->fetchAll();
-
-if (count($resultr) > 0) {
-?>
+        if (count($resultr) > 0) { ?>
 <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?> </option>
-<?php
-}
-
-}
-
-}catch(PDOException $e)
-{
-echo "Connection failed: " . $e->getMessage();
-}
-?>
+<?php }
+    }
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+} ?>
 </select>
 </div>
 
@@ -128,35 +138,42 @@ echo "Connection failed: " . $e->getMessage();
 <label class="form-label">Promote to Class</label>
 <select class="form-control select2" name="class2" required style="width: 100%;">
 <option value="" selected disabled> Select One</option>
-<?php
-try {
-$conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+<?php try {
+    $conn = new PDO(
+        "mysql:host=" .
+            DBHost .
+            ";dbname=" .
+            DBName .
+            ";charset=" .
+            DBCharset .
+            ";collation=" .
+            DBCollation .
+            ";prefix=" .
+            DBPrefix .
+            "",
+        DBUser,
+        DBPass
+    );
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$stmt = $conn->prepare("SELECT * FROM tbl_classes");
-$stmt->execute();
-$result = $stmt->fetchAll();
+    $stmt = $conn->prepare("SELECT * FROM tbl_classes");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
 
-foreach($result as $row)
-{
+    foreach ($result as $row) {
+        // $stmt = $conn->prepare("SELECT * FROM tbl_students WHERE class = ?");
+        // $stmt->execute([$row[0]]);
+        $stmt = $conn->prepare("SELECT * FROM tbl_students");
+        $stmt->execute();
+        $resultr = $stmt->fetchAll();
 
-$stmt = $conn->prepare("SELECT * FROM tbl_students WHERE class = ?");
-$stmt->execute([$row[0]]);
-$resultr = $stmt->fetchAll();
-
-if (count($resultr) > 0) {
-?>
+        if (count($resultr) > 0) { ?>
 <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?> </option>
-<?php
-}
-
-}
-
-}catch(PDOException $e)
-{
-echo "Connection failed: " . $e->getMessage();
-}
-?>
+<?php }
+    }
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+} ?>
 </select>
 </div>
 
@@ -184,7 +201,7 @@ echo "Connection failed: " . $e->getMessage();
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
 <script type="text/javascript">$('#srmsTable').DataTable({"sort" : false});</script>
 <script src="select2/dist/js/select2.full.min.js"></script>
-<?php require_once('const/check-reply.php'); ?>
+<?php require_once "const/check-reply.php"; ?>
 <script>
 $('.select2').select2()
 </script>

@@ -102,7 +102,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h4 class="tile-title">My Examination Results</h4>
+                    <h4 class="tile-title"> <?php echo date("Y");?> Examination Results</h4>
 
                     <?php
                     // if (WBResAvi == "1") {
@@ -140,7 +140,7 @@
                                             <div class="tile-title-w-btn">
                                                 <!-- heading display which class is the student in -->
                                                 <h5 class="title"><?php echo$class_de[0][1]; ?></h5>
-                                            </div>8
+                                            </div>
                                             <div class="tile-body">
                                                 <div class="bs-component">
                                                     <!-- tabs that show the terms in report ( term  | term 2 | term 3 . . . ) -->
@@ -386,7 +386,7 @@
                                     <?php
                                 }else{
                                     ?>
-                                      <p style ="font-size = '90';"> RESULTS NOT AVAILABLE, CHECK ANNOUNCEMENTS ONCE AVAILABLE</p>
+                                      <!-- <p style ="font-size = '90';"> RESULTS NOT AVAILABLE, CHECK ANNOUNCEMENTS ONCE AVAILABLE</p> -->
                                 <?php
                                 }
                              //END FOREACH

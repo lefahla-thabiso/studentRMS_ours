@@ -5,21 +5,7 @@
     require_once('const/school.php');
     require_once('const/check_session.php');
     require_once('const/calculations.php');
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //     // Get values from both select fields
-    //     $student = $_POST['yearofstudy']; // Value from student select
-    //          // Value from term select
-        
-    //     // Now $student and $term variables contain the selected values
-    //     var_dump($student);
-    //     print_r($student);
-    //     // You can use these variables as needed
-    //     echo "Selected Student ID: " . $student; 
-        
-     
-    //     // Continue with your processing...
-    // }
-   
+    
     if ($res == "1" && $level == "3") {
         // Continue execution
     } else {
@@ -34,21 +20,47 @@
     $selectedValue = "";
     $selectedText = "";
     $displayMessage = " ";
+    $classChoosen = array();
 
     // Check if form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Capture the select value if it exists in POST data
         if (isset($_POST["yearofstudy"])) {
+            $conn = new PDO(
+                "mysql:host=" .
+                    DBHost .
+                    ";dbname=" .
+                    DBName .
+                    ";charset=" .
+                    DBCharset .
+                    ";collation=" .
+                    DBCollation .
+                    ";prefix=" .
+                    DBPrefix .
+                    "",
+                DBUser,
+                DBPass
+            );
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // selecting past student marks from previous classes using class id's
+            $stmt = $conn->prepare("SELECT id class FROM tbl_classes GROUP BY id");
+            $stmt->execute();
+            $class_id_list = $stmt->fetchAll(); 
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $classChoosen[$row['id']] = $row['id'];
+            }
             $selectedValue = $_POST["yearofstudy"];
             
             // Define options array to get the text value
-            $options = [
-                "option1" => "10",
-                "option2" => "11"
-            ];
+            // $options = [
+            //     "option1" => "10",
+            //     "option2" => "11"
+            // ];
             
             // Get the text corresponding to the selected value
-            $selectedText = isset($options[$selectedValue]) ? $options[$selectedValue] : "";
+            $selectedText = isset($classChoosen[$selectedValue]) ? $classChoosen[$selectedValue] : "";
             
             // Create display message
             $displayMessage = $selectedValue;
@@ -490,7 +502,7 @@
                                     <?php
                                 }else{
                                     ?>
-                                      <p style ="font-size = '90';"> RESULTS NOT AVAILABLE, CHECK ANNOUNCEMENTS ONCE AVAILABLE</p>
+                                      <!-- <p style ="font-size = '90';"> RESULTS NOT AVAILABLE, CHECK ANNOUNCEMENTS ONCE AVAILABLE</p> -->
                                 <?php
                                 }
                              //END FOREACH
