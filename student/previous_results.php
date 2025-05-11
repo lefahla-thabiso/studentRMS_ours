@@ -29,6 +29,31 @@
     $stmt = $conn->prepare("SELECT * FROM tbl_grade_system");
     $stmt->execute();
     $grading = $stmt->fetchAll();
+
+    // Initialize variables
+    $selectedValue = "";
+    $selectedText = "";
+    $displayMessage = " ";
+
+    // Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Capture the select value if it exists in POST data
+        if (isset($_POST["yearofstudy"])) {
+            $selectedValue = $_POST["yearofstudy"];
+            
+            // Define options array to get the text value
+            $options = [
+                "option1" => "10",
+                "option2" => "11"
+            ];
+            
+            // Get the text corresponding to the selected value
+            $selectedText = isset($options[$selectedValue]) ? $options[$selectedValue] : "";
+            
+            // Create display message
+            $displayMessage = $selectedValue;
+        }
+    }
 ?>
 	<!DOCTYPE html>
 	<html lang="en">
@@ -115,27 +140,15 @@
         </div>
 
         <div class="row" style="margin-top: -1%;">
-            <div class="col-md-4 center_form" >
+            <div class="col-md-12 center_form" >
                 <div class="tile">
                     <h4 class="tile-title">Vieiwng past Results</h4>
-
-                    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get values from both select fields
-        $student = $_POST['yearofstudy']; // Value from student select
-       
-        echo "Selected Student ID: " . $student; 
-        
-     
-        // Continue with your processing...
-    }
-   
-                    ?>
-                <form e<form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="app_frm" method="POST" autocomplete="OFF" id="form_result" >
-                                        <div class="mb-2">
-                                            <label class="form-label"><b>Select Class</b></label>
-                                            <select class="form-control select2" name="yearofstudy" required style="width: 100%;">
-                                                <option value="" selected disabled> Select One</option>
+                    
+                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="autoForm">
+                                   <div class="mb-2">
+                                            <label for="autoSelect" class="form-label"><b>Select Class</b></label>
+                                            <select id="autoSelect" class="form-control select2" name="yearofstudy" required style="width: 100%;" onchange="this.form.submit()">
+                                                <option value="" selected disabled> Select class</option>
                                                 <?php try {
                                     $conn = new PDO(
                                         "mysql:host=" .
@@ -167,7 +180,7 @@
                                         $result = $stmt->fetchAll(); 
 
                                         foreach ($result as $row) { ?>
-                                            <option value="<?php echo $id[0];?>">
+                                            <option value="<?php echo $id[0];?>" <?php  if($selectedValue == $row[0]) echo "selected";?>>
                                                 <!-- populating the names of the classes in dropdown bow -->
                                             <?php  echo $row[0] ?>
                                         
@@ -184,21 +197,14 @@
                                     } ?>
                                             </select>
                                         </div>
-                                    
+<!--                                     
                                 <div class="text-center" style = "margin-top: 20px;">
-                                    <button class="btn btn-primary app_btn" type="submit">View Results</button>
-                                </div>
+                                    <button  class="btn btn-primary app_btn hidden" type="submit">View Results</button>
+                                </div> -->
+                                <!-- <button type="submit" class="hidden">Submit</button> -->
             </form>
 
-            
-            </div>
-        </div>
-        <div class="row" id="tableresults">
-            <div class="col-md-12">
-                <div class="tile">
-                    <h4 class="tile-title">My Examination Results</h4>
-
-                    <?php
+            <?php
                     // if (WBResAvi == "1") {
                         try {
                             $conn = new PDO(
@@ -214,18 +220,17 @@
                            
                             // foreach ($_classes as $key => $class) { 
                                 $stmt = $conn->prepare("SELECT * FROM tbl_classes WHERE id = ?");  
-                                $stmt->execute([$class]);
+                                $stmt->execute([$displayMessage]);
                                 $class_de = $stmt->fetchAll(); // take rows of corresponding 
 
                                 $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND student = ? LIMIT 1");
-                                $stmt->execute([$class, $account_id]);
+                                $stmt->execute([$displayMessage, $account_id]);
                                 // take all the mark of the logged student for his/her class(form one, form two......)
-                                $student_has_marks_for_exams = $stmt->fetchAll(); 
-       
-                                // var_dump(count($student_has_marks_for_exams));
+                                $student_has_marks_for_exams = $stmt->fetchAll();  
+
                                 if (count($student_has_marks_for_exams) > 0) {
                                     $stmt = $conn->prepare("SELECT term FROM tbl_exam_results WHERE class = ? GROUP BY term");
-                                    $stmt->execute([$class]);
+                                    $stmt->execute([$displayMessage]);
                                     $_terms = $stmt->fetchAll(); // take all the terms of which the student has results for
                                     
                                     ?>
@@ -303,14 +308,14 @@
                                                                             foreach ($result as $key => $row) {
                                                                                $class_list = unserialize($row[1]);
 
-                                                                                if (in_array($class,$class_list)) {
+                                                                                if (in_array($displayMessage,$class_list)) {
                                                                                     $t_subjects++;
                                                                                     $score = 0;
                                                                                     $grd = "N/A";
                                                                                     $rm = "N/A";
 
                                                                                     $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
-                                                                                    $stmt->execute([$class, $row[0], $_term[0], $account_id]);
+                                                                                    $stmt->execute([$displayMessage, $row[0], $_term[0], $account_id]);
                                                                                     $ex_result = $stmt->fetchAll();
 
                                                                                     if (!empty($ex_result[0][5])) {
@@ -370,7 +375,7 @@
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> -->
                                                                     </p>
 
-                                                                    <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
+                                                                    <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($displayMessage); ?>"
                                                                        class="btn btn-primary btn-sm">DOWNLOAD</a>
                                                                 </div>
                                                                 <?php
@@ -401,14 +406,14 @@
                                                                             foreach ($result as $key => $row) {
                                                                                $class_list = unserialize($row[1]);
 
-                                                                                if (in_array($class,$class_list)) {
+                                                                                if (in_array($displayMessage,$class_list)) {
                                                                                     $t_subjects++;
                                                                                     $score = 0;
                                                                                     $grd = "N/A";
                                                                                     $rm = "N/A";
 
                                                                                     $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
-                                                                                    $stmt->execute([$class, $row[0], $_term[0], $account_id]);
+                                                                                    $stmt->execute([$displayMessage, $row[0], $_term[0], $account_id]);
                                                                                     $ex_result = $stmt->fetchAll();
 
                                                                                     if (!empty($ex_result[0][5])) {
@@ -459,13 +464,18 @@
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> --></p>
 																<?php
                                                                     if($tscore != 0){
-                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm ">DOWNLOAD</a>
-																	<?php
+                                                                        ?>  
+                                                                         <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($displayMessage); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
+                                                                        <?php
                                                                     }else{
-                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm disabled">DOWNLOAD</a>
+                                                                        ?> 
+                                                                         <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($displayMessage); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
 																		<?php
                                                                     }
                                                                     ?>
+                                                                    
 														</div>
 														<?php
                                                             }
@@ -489,10 +499,11 @@
                         }
                     // }
                     ?>
-                    </div>
-                    </div>
-                    </div>
-    </div>
+            </div>
+       
+       
+       <!-- thabiso nthako col-md-12 -->
+        </div>
 </main>
 <script src="js/jquery-3.7.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

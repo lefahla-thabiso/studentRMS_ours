@@ -140,7 +140,7 @@
                                             <div class="tile-title-w-btn">
                                                 <!-- heading display which class is the student in -->
                                                 <h5 class="title"><?php echo$class_de[0][1]; ?></h5>
-                                            </div>
+                                            </div>8
                                             <div class="tile-body">
                                                 <div class="bs-component">
                                                     <!-- tabs that show the terms in report ( term  | term 2 | term 3 . . . ) -->
