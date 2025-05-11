@@ -5,6 +5,21 @@
     require_once('const/school.php');
     require_once('const/check_session.php');
     require_once('const/calculations.php');
+    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //     // Get values from both select fields
+    //     $student = $_POST['yearofstudy']; // Value from student select
+    //          // Value from term select
+        
+    //     // Now $student and $term variables contain the selected values
+    //     var_dump($student);
+    //     print_r($student);
+    //     // You can use these variables as needed
+    //     echo "Selected Student ID: " . $student; 
+        
+     
+    //     // Continue with your processing...
+    // }
+   
     if ($res == "1" && $level == "3") {
         // Continue execution
     } else {
@@ -14,13 +29,38 @@
     $stmt = $conn->prepare("SELECT * FROM tbl_grade_system");
     $stmt->execute();
     $grading = $stmt->fetchAll();
+
+    // Initialize variables
+    $selectedValue = "";
+    $selectedText = "";
+    $displayMessage = " ";
+
+    // Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Capture the select value if it exists in POST data
+        if (isset($_POST["yearofstudy"])) {
+            $selectedValue = $_POST["yearofstudy"];
+            
+            // Define options array to get the text value
+            $options = [
+                "option1" => "10",
+                "option2" => "11"
+            ];
+            
+            // Get the text corresponding to the selected value
+            $selectedText = isset($options[$selectedValue]) ? $options[$selectedValue] : "";
+            
+            // Create display message
+            $displayMessage = $selectedValue;
+        }
+    }
 ?>
 	<!DOCTYPE html>
 	<html lang="en">
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 	<head>
-		<title>SRMS - My Examination Results</title>
+		<title>SRMS - Vieiwng past Resultss</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,16 +135,76 @@
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1>My Examination Results</h1>
+                <h1>Vieiwng past Results</h1>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row" style="margin-top: -1%;">
+            <div class="col-md-12 center_form" >
                 <div class="tile">
-                    <h4 class="tile-title">My Examination Results</h4>
+                    <h4 class="tile-title">Vieiwng past Results</h4>
+                    
+                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="autoForm">
+                                   <div class="mb-2">
+                                            <label for="autoSelect" class="form-label"><b>Select Class</b></label>
+                                            <select id="autoSelect" class="form-control select2" name="yearofstudy" required style="width: 100%;" onchange="this.form.submit()">
+                                                <option value="" selected disabled> Select class</option>
+                                                <?php try {
+                                    $conn = new PDO(
+                                        "mysql:host=" .
+                                            DBHost .
+                                            ";dbname=" .
+                                            DBName .
+                                            ";charset=" .
+                                            DBCharset .
+                                            ";collation=" .
+                                            DBCollation .
+                                            ";prefix=" .
+                                            DBPrefix .
+                                            "",
+                                        DBUser,
+                                        DBPass
+                                    );
+                                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    <?php
+                                    // selecting past student marks from previous classes using class id's
+                                    $stmt = $conn->prepare("SELECT  class FROM tbl_exam_results WHERE student = ? AND class != ? GROUP BY class");
+                                    $stmt->execute([$account_id,$class]);
+                                    $class_id_list = $stmt->fetchAll(); 
+                                    
+                                    if(count($class_id_list) > 0){                     
+                                    foreach ($class_id_list as $id) {
+                                        // taking the names of classes using their id's
+                                        $stmt = $conn->prepare("SELECT name from tbl_classes WHERE id = ?");
+                                        $stmt->execute([$id[0]]);
+                                        $result = $stmt->fetchAll(); 
+
+                                        foreach ($result as $row) { ?>
+                                            <option value="<?php echo $id[0];?>" <?php  if($selectedValue == $row[0]) echo "selected";?>>
+                                                <!-- populating the names of the classes in dropdown bow -->
+                                            <?php  echo $row[0] ?>
+                                        
+                                        </option>
+                                        <?php
+                                        }
+                                        ?> 
+                                        
+                                        <?php 
+                                    }
+                                    }
+                                    } catch (PDOException $e) {
+                                    echo "Connection failed: " . $e->getMessage();
+                                    } ?>
+                                            </select>
+                                        </div>
+<!--                                     
+                                <div class="text-center" style = "margin-top: 20px;">
+                                    <button  class="btn btn-primary app_btn hidden" type="submit">View Results</button>
+                                </div> -->
+                                <!-- <button type="submit" class="hidden">Submit</button> -->
+            </form>
+
+            <?php
                     // if (WBResAvi == "1") {
                         try {
                             $conn = new PDO(
@@ -120,18 +220,17 @@
                            
                             // foreach ($_classes as $key => $class) { 
                                 $stmt = $conn->prepare("SELECT * FROM tbl_classes WHERE id = ?");  
-                                $stmt->execute([$class]);
+                                $stmt->execute([$displayMessage]);
                                 $class_de = $stmt->fetchAll(); // take rows of corresponding 
 
                                 $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND student = ? LIMIT 1");
-                                $stmt->execute([$class, $account_id]);
+                                $stmt->execute([$displayMessage, $account_id]);
                                 // take all the mark of the logged student for his/her class(form one, form two......)
-                                $student_has_marks_for_exams = $stmt->fetchAll(); 
-       
-                                // var_dump(count($student_has_marks_for_exams));
+                                $student_has_marks_for_exams = $stmt->fetchAll();  
+
                                 if (count($student_has_marks_for_exams) > 0) {
                                     $stmt = $conn->prepare("SELECT term FROM tbl_exam_results WHERE class = ? GROUP BY term");
-                                    $stmt->execute([$class]);
+                                    $stmt->execute([$displayMessage]);
                                     $_terms = $stmt->fetchAll(); // take all the terms of which the student has results for
                                     
                                     ?>
@@ -140,7 +239,7 @@
                                             <div class="tile-title-w-btn">
                                                 <!-- heading display which class is the student in -->
                                                 <h5 class="title"><?php echo$class_de[0][1]; ?></h5>
-                                            </div>8
+                                            </div>
                                             <div class="tile-body">
                                                 <div class="bs-component">
                                                     <!-- tabs that show the terms in report ( term  | term 2 | term 3 . . . ) -->
@@ -209,14 +308,14 @@
                                                                             foreach ($result as $key => $row) {
                                                                                $class_list = unserialize($row[1]);
 
-                                                                                if (in_array($class,$class_list)) {
+                                                                                if (in_array($displayMessage,$class_list)) {
                                                                                     $t_subjects++;
                                                                                     $score = 0;
                                                                                     $grd = "N/A";
                                                                                     $rm = "N/A";
 
                                                                                     $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
-                                                                                    $stmt->execute([$class, $row[0], $_term[0], $account_id]);
+                                                                                    $stmt->execute([$displayMessage, $row[0], $_term[0], $account_id]);
                                                                                     $ex_result = $stmt->fetchAll();
 
                                                                                     if (!empty($ex_result[0][5])) {
@@ -276,7 +375,7 @@
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> -->
                                                                     </p>
 
-                                                                    <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
+                                                                    <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($displayMessage); ?>"
                                                                        class="btn btn-primary btn-sm">DOWNLOAD</a>
                                                                 </div>
                                                                 <?php
@@ -307,14 +406,14 @@
                                                                             foreach ($result as $key => $row) {
                                                                                $class_list = unserialize($row[1]);
 
-                                                                                if (in_array($class,$class_list)) {
+                                                                                if (in_array($displayMessage,$class_list)) {
                                                                                     $t_subjects++;
                                                                                     $score = 0;
                                                                                     $grd = "N/A";
                                                                                     $rm = "N/A";
 
                                                                                     $stmt = $conn->prepare("SELECT * FROM tbl_exam_results WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?");
-                                                                                    $stmt->execute([$class, $row[0], $_term[0], $account_id]);
+                                                                                    $stmt->execute([$displayMessage, $row[0], $_term[0], $account_id]);
                                                                                     $ex_result = $stmt->fetchAll();
 
                                                                                     if (!empty($ex_result[0][5])) {
@@ -365,13 +464,18 @@
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> --></p>
 																<?php
                                                                     if($tscore != 0){
-                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm ">DOWNLOAD</a>
-																	<?php
+                                                                        ?>  
+                                                                         <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($displayMessage); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
+                                                                        <?php
                                                                     }else{
-                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm disabled">DOWNLOAD</a>
+                                                                        ?> 
+                                                                         <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($displayMessage); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
 																		<?php
                                                                     }
                                                                     ?>
+                                                                    
 														</div>
 														<?php
                                                             }
@@ -395,23 +499,25 @@
                         }
                     // }
                     ?>
-					</div>
-				</div>
-			</div>
-		</main>
-		<script src="js/jquery-3.7.0.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/main.js"></script>
-		<script src="loader/waitMe.js"></script>
-		<script src="js/forms.js"></script>
-		<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
-		<script type="text/javascript">
-		$('#srmsTable').DataTable({
-			"sort": false
-		});
-		</script>
-		<script src="js/sweetalert2@11.js"></script>
-	</body>
+            </div>
+       
+       
+       <!-- thabiso nthako col-md-12 -->
+        </div>
+</main>
+<script src="js/jquery-3.7.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script src="loader/waitMe.js"></script>
+<script src="js/forms.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
+<script type="text/javascript">
+$('#srmsTable').DataTable({
+    "sort": false
+});
+</script>
+<script src="js/sweetalert2@11.js"></script>
+</body>
 
-	</html>
+</html>

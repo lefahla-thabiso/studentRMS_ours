@@ -14,6 +14,7 @@ if ($res != "1" || $level != "3" || !isset($_GET["term"])) {
 }
 
 $term = $_GET["term"];
+$curentClass = $_GET["currentClass"];
 
 try {
     $conn = new PDO(
@@ -164,7 +165,7 @@ foreach ($subjects as $row) {
             SELECT * FROM tbl_exam_results 
             WHERE class = ? AND subject_combination = ? AND term = ? AND student = ?
         ");
-        $stmt->execute([$class, $row[0], $term, $account_id]);
+        $stmt->execute([$curentClass, $row[0], $term, $account_id]);
         $ex_result = $stmt->fetchAll();
 
         if (!empty($ex_result[0][5])) {
