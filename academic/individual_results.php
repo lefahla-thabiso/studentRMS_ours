@@ -62,8 +62,7 @@ if ($res == "1" && $level == "1") {
 				<li class="treeview is-expanded"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-file-text"></i><span class="app-menu__label">Examination Results</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
 					<ul class="treeview-menu">
 						<li><a class="treeview-item" href="academic/manage_results"><i class="icon bi bi-circle-fill"></i> Manage Results</a></li>
-						<li><a class="treeview-item  active" href="academic/individual_results"><i class="icon bi bi-circle-fill"></i> Individual Results</a></li>
-						<li><a class="treeview-item  active" href="academic/individual_results"><i class="icon bi bi-circle-fill"></i> Import Results</a></li>
+						<li><a class="treeview-item  active" href="academic/individual_results"><i class="icon bi bi-circle-fill"></i> Individual Results</a></li> 
 					</ul>
 				</li>
 				<li><a class="app-menu__item" href="academic/report"><i class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report Tool</span></a></li>

@@ -276,8 +276,10 @@
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> -->
                                                                     </p>
 
-                                                                    <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
-                                                                       class="btn btn-primary btn-sm">DOWNLOAD</a>
+                                                                    <!-- <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>"
+                                                                       class="btn btn-primary btn-sm">DOWNLOAD</a> -->
+                                                                       <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($class); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
                                                                 </div>
                                                                 <?php
                                                              } else {
@@ -365,10 +367,16 @@
                                                                             class="badge bg-secondary rounded-pill"><?php echo get_points($subssss); ?></span> --></p>
 																<?php
                                                                     if($tscore != 0){
-                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm ">DOWNLOAD</a>
+                                                                        ?>
+                                                                         <!-- <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm ">DOWNLOAD</a> -->
+                                                                        <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($class); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
 																	<?php
                                                                     }else{
-                                                                        ?> <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm disabled">DOWNLOAD</a>
+                                                                        ?> 
+                                                                        <!-- <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>" class="btn btn-primary btn-sm disabled">DOWNLOAD</a> -->
+                                                                        <a target="_blank" href="student/save_pdf?term=<?php echo $_term[0]; ?>&currentClass=<?=urlencode($class); ?>"
+                                                                         class="btn btn-primary btn-sm">DOWNLOAD</a>
 																		<?php
                                                                     }
                                                                     ?>
