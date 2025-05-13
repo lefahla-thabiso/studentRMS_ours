@@ -134,8 +134,9 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
                                     </div>
 
                                     <button type="submit" name="submit" value="1" class="btn btn-primary app_btn">Export Students</button>
-                                    <?php
-                                            if (isset($_SESSION['export_file'])) {
+                                    
+                                         
+                                </form>  <?php if (isset($_SESSION['export_file'])) {
                                             $file = $_SESSION['export_file'];
                                             $files = 'import_sheets/'.$file;
 
@@ -148,7 +149,6 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
                                             unset($_SESSION['export_file']);
                                             }
                                             ?>
-                                </form>
                             </div>
                         </div>
                     </div>

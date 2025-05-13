@@ -82,7 +82,7 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
                         <div class="tile-body">
                             <div class="table-responsive">
                                 <h3 class="tile-title">Import Results</h3>
-                                <form class="app_frm" enctype="multipart/form-data" method="POST" autocomplete="OFF" action="teacher/core/import_results">
+                                <form id="import_export_Form" class="app_frm" enctype="multipart/form-data" method="POST" autocomplete="OFF" action="teacher/core/export_results">
 
                                     <div class="mb-2">
                                         <label class="form-label">Select Term</label>
@@ -114,7 +114,11 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
 
                                     <div class="mb-2">
                                         <label class="form-label">Select Class</label>
-                                        <select onchange="fetch_subjects(this.value);" 
+                                        <!-- <select onchange="fetch_subjects(this.value);" 
+                                          -->
+                                        <select onchange="document.getElementById('import_export_Form').submit();"
+ 
+                                        
                                         class="form-control select2" name="class" required style="width: 100%;">
                                     <option selected disabled value="">Select Class</option>
                                     <?php
@@ -162,45 +166,69 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
                                         </select>
                                         </div>
 
-                                        <div class="mb-2">
+                                        <!-- <div class="mb-2">
                                             <label class="form-label">Select Subject</label>
-                                            <select class="form-control" name="subject" required id="sub_imp">
+                                            <select class="form-control" name="subject" required id="sub_imp"
+                                            style="display: none;"
+                                            onchange="document.getElementById('import_export_Form').submit();">
                                         
                                             <option selected disabled value="">Select One</option>
-                                    </select>
-                                    </div>
+                                         </select>
+                                </div> -->
+                            </form>
+                           
+                                 <?php if (isset($_SESSION['export_file'])) {
+                                            $file = $_SESSION['export_file'];
+                                            $files = 'import_sheets/'.$file;
 
-                                    <div class="mb-3">
-                                        <label class="form-label">CSV File</label>
-                                        <input required accept=".csv" type="file" name="file" class="form-control">
-                                    </div>
+                                            ?>
+                                        <div class="alert alert-info mt-3" role="alert">
+                                            <b>CSV File generated,  <a download href="<?php echo $files; ?>" class="alert-link"><b>CLICK HERE</b></a> to download.</b>
+                                        </div>
 
-                                    <button type="submit" name="submit" value="1" class="btn btn-primary app_btn">Import Results</button>
-                                </form>
-                            </div>
+                                        <?php
+                                            unset($_SESSION['export_file']);
+                                            }
+                                    ?>
+                                   <form method="POST" enctype="multipart/form-data" action="teacher/core/import_results.php">
+                                        
+                                        <!-- <button type="submit">Import Results</button> -->
+                                        <div class="mb-2">
+                                        <label class="form-label"><b>Uploading File</b></label>
+                                        <!-- <input required accept=".csv" type="file" name="file" class="form-control" accept="application/msexcel"> -->
+                                            <input type="file" name="csv_file" required />
+                                    </div>
+                                        <div class="">
+                                        <button class="btn btn-primary app_btn" type="submit">Import Students</button>
+                                    </div>
+                                   </form>
+                                     
+
+                                    
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </main>
+    </main>
 
-        <script src="js/jquery-3.7.0.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
-        <script src="loader/waitMe.js"></script>
-        <script src="js/sweetalert2@11.js"></script>
-        <script src="js/forms.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
-        <script type="text/javascript">
-            $('#srmsTable').DataTable({"sort" : false});
-        </script>
-        <script src="select2/dist/js/select2.full.min.js"></script>
-        <?php require_once('const/check-reply.php'); ?>
-        <script>
-            $('.select2').select2()
-        </script>
-    </body>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="loader/waitMe.js"></script>
+    <script src="js/sweetalert2@11.js"></script>
+    <script src="js/forms.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
+    <script type="text/javascript">
+        $('#srmsTable').DataTable({"sort" : false});
+    </script>
+    <script src="select2/dist/js/select2.full.min.js"></script>
+    <?php require_once('const/check-reply.php'); ?>
+    <script>
+        $('.select2').select2()
+    </script>
+</body>
 
-    </html>
+</html>
