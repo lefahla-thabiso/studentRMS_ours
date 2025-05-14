@@ -107,12 +107,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["reply"] = [
                 ["success", "Student registered successfully"],
             ];
-            header("location:../register_students");
+            // header("location:../register_students");
         }
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
 } else {
-    header("location:../");
+    // header("location:../");
 }
 ?>
