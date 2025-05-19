@@ -14,7 +14,7 @@ function generateStudentRegNo($conn) {
         $lastId = 0;
     }
 
-    $newId = $lastId + 1;
+    $newId = $lastId +1;
     return "REG" . $year . str_pad($newId, 4, "0", STR_PAD_LEFT);
 }
 
