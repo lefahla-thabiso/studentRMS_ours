@@ -10,7 +10,7 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <head>
-<title>SRMS - Subject Combinations</title>
+<title>SRMS - Teacher's subject</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,19 +62,19 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 <ul class="treeview-menu">
 
 <li><a class="treeview-item" href="academic/manage_results"><i class="icon bi bi-circle-fill"></i> Manage Results</a></li>
-<li><a class="treeview-item" href="academic/individual_results"><i class="icon bi bi-circle-fill"></i> Individual Results</a></li>
+<li><a class="treeview-item" href="academic/individual_results"><i class="icon bi bi-circle-fill"></i> Individual Results</a></li> 
 </ul>
 </li>
 <li><a class="app-menu__item" href="academic/report"><i class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report Tool</span></a></li>
 <li><a class="app-menu__item" href="academic/grading-system"><i class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading System</span></a></li>
-<li><a class="app-menu__item" href="academic/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li>
+<!-- <li><a class="app-menu__item" href="academic/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li> -->
 <li><a class="app-menu__item" href="academic/announcement"><i class="app-menu__icon feather icon-bell"></i><span class="app-menu__label">Announcements</span></a></li>
 </ul>
 </aside>
 <main class="app-content">
 <div class="app-title">
 <div>
-<h1>Subject Combinations</h1>
+<h1>Teacher's subject</h1>
 </div>
 <ul class="app-breadcrumb breadcrumb">
 <li class="breadcrumb-item"><button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addModal">Add</button></li>
@@ -85,7 +85,7 @@ if ($res == "1" && $level == "1") {}else{header("location:../");}
 <div class="modal-dialog modal-lg">
 <div class="modal-content ">
 <div class="modal-header">
-<h5 class="modal-title" id="addModalLabel">Add Subject Combinations</h5>
+<h5 class="modal-title" id="addModalLabel">Add Teacher subject</h5>
 </div>
 <div class="modal-body">
 <form class="app_frm" method="POST" autocomplete="OFF" action="academic/core/new_comb">

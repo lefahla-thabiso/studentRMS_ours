@@ -226,18 +226,20 @@ $html = '<table border="1" cellpadding="3" style="margin-bottom:10px;  font-size
 <td><b>AVERAGE</b></td>
 <td><b>GRADE</b></td>
 <td><b>REMARK</b></td>
-<td><b>DIVISION</b></td>
-<td><b>POINTS</b></td>
 </tr>
 <tr>
 <td align="center">'.$tscore.'</td>
 <td align="center">'.$av.'</td>
 <td align="center">'.$grd_.'</td>
 <td align="center">'.$rm_.'</td>
-<td align="center">'.get_division($subssss).'</td>
-<td align="center">'.get_points($subssss).'</td>
 </tr>
 </table>';
+
+// <td><b>DIVISION</b></td>
+// <td><b>POINTS</b></td>
+
+// <td align="center">'.get_division($subssss).'</td>
+// <td align="center">'.get_points($subssss).'</td>
 
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 

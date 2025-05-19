@@ -61,7 +61,7 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
 </ul>
 </li>
 <li><a class="app-menu__item" href="teacher/grading-system"><i class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading System</span></a></li>
-<li><a class="app-menu__item" href="teacher/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li>
+<!-- <li><a class="app-menu__item" href="teacher/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li> -->
 </ul>
 </aside>
 <main class="app-content">
