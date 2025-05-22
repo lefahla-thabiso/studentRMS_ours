@@ -1,28 +1,28 @@
 # SRMS
 Student Result Management System
 
-Admin Functions
-  Manage student records (add/edit/delete)
-  Manage teachers and user roles
-  Define classes, terms, and subjects
-  Configure grading and promotion rules
-  View all results and reports
-  Backup and restore system data
-  Control system settings and access rights
-
-Teacher Functions
-  Enter and update student exam results
-  View and analyze student performance
-  Generate class-wise result reports
-  Add remarks or comments to student results
-  Track subject-wise performance
-  Promote students based on criteria (if permitted)
-
-Student Functions
-  View personal exam results and report cards
-  Track performance across terms/years
-  Access subject-wise scores and grades
-  Receive notifications or messages
-  Download result slips (PDF/Excel)
+<ul>ADMIN FUNCTIONS</ul>
+  <li>Manage student records (add/edit/delete)</li>
+  <li>Manage teachers and user roles</li>
+  <li>Define classes, terms, and subjects</li>
+  <li>Configure grading and promotion rules</li>
+  <li>View all results and reports</li>
+  <li>Backup and restore system data</li>
+  <li>Control system settings and access rights</li>
+ </br>
+<ul>TEACHER FUNCTIONS</ul>
+  <li>Enter and update student exam results</li>
+  <li>View and analyze student performance</li>
+  <li>Generate class-wise result reports</li>
+  <li>Add remarks or comments to student results</li>
+  <li>Track subject-wise performance</li>
+  <li>Promote students based on criteria (if permitted)</li>
+</br>
+<ul>STUDENT FUNCTIONS</ul>
+  <li>View personal exam results and report cards</li>
+  <li>Track performance across terms/years</li>
+  <li>Access subject-wise scores and grades</li>
+  <li>Receive notifications or messages</li>
+  <li>Download result slips (PDF/Excel)</li>
 
   
