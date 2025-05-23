@@ -127,8 +127,8 @@ header("location:./");
                         class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading
                         System</span></a></li>
             <!-- <li><a class="app-menu__item" href="academic/division-system"><i -->
-                        class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division
-                        System</span></a></li>
+                        <!-- class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division
+                        System</span></a></li> -->
             <li><a class="app-menu__item" href="academic/announcement"><i
                         class="app-menu__icon feather icon-bell"></i><span
                         class="app-menu__label">Announcements</span></a></li>
@@ -159,8 +159,8 @@ header("location:./");
                                         <th>AVERAGE</th>
                                         <th>GRADE</th>
                                         <th>REMARKS</th>
-                                        <th>DIVISION</th>
-                                        <th>POINTS</th>
+                                        <!-- <th>DIVISION</th>
+                                        <th>POINTS</th> -->
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -246,8 +246,8 @@ if ($row2[9] == "DEFAULT") {
                                         <td><?php echo $av; ?></td>
                                         <td><?php echo $grd; ?></td>
                                         <td><?php echo $rm; ?></td>
-                                        <td><?php echo get_division($subssss); ?></td>
-                                        <td><?php echo get_points($subssss); ?></td>
+                                        <!-- <td><?php echo get_division($subssss); ?></td>
+                                        <td><?php echo get_points($subssss); ?></td> -->
 
                                         <td align="center" width="190">
                                             <a href="academic/core/edit_result?std=<?php echo $row2[0]; ?>&term=<?php echo $term;?>"
