@@ -9,13 +9,13 @@ function generateStudentRegNo($conn) {
     $stmt = $conn->query("SELECT id FROM tbl_students ORDER BY id DESC LIMIT 1");
 
     if ($stmt->rowCount() > 0) {
-        $lastId = (int) str_replace("REG" . $year, "", $stmt->fetchColumn());
+        $lastId = (int) str_replace("ST" . $year, "", $stmt->fetchColumn());
     } else {
         $lastId = 0;
     }
 
     $newId = $lastId + 1;
-    return "REG" . $year . str_pad($newId, 4, "0", STR_PAD_LEFT);
+    return "ST" . $year . str_pad($newId, 4, "0", STR_PAD_LEFT);
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

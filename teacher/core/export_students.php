@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $fp = fopen("import_sheets/" . $fileName, "w");
 
-        $rowData = ["REGISTRATION NUMBER", "STUDENT NAME", "SCORE"];
+        $rowData = ["REGISTRATION NUMBER", "STUDENT NAME"];//];
         fputcsv($fp, $rowData);
 
         $stmt = $conn->prepare("SELECT * FROM tbl_students WHERE class = ?");
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $rowData = [
                 $row[0],
                 "" . $row[1] . " " . $row[2] . " " . $row[3] . "",
-                "0",
+                // "0",
             ];
             fputcsv($fp, $rowData);
         }

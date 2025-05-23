@@ -114,7 +114,7 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
                                     </div>
 
                                     <div class="alert alert-info">
-                                        Download excel template from <a download href="templates/import_students.csv" class="alert-link">here</a>
+                                        Download excel template from <a download href="templates/import_students.xlsx" class="alert-link">here</a>
                                     </div>
                                     <div class="">
                                         <button class="btn btn-primary app_btn" type="submit">Import Students</button>
