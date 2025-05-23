@@ -2,6 +2,8 @@
 chdir("../../");
 session_start();
 require_once "db/config.php";
+require 'vendor/autoload.php'; // PhpSpreadsheet
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // Generate registration number
 function generateStudentRegNo($conn) {
@@ -9,16 +11,17 @@ function generateStudentRegNo($conn) {
     $stmt = $conn->query("SELECT id FROM tbl_students ORDER BY id DESC LIMIT 1");
 
     if ($stmt->rowCount() > 0) {
-        $lastId = (int) str_replace("REG" . $year, "", $stmt->fetchColumn());
+        $lastId = (int) str_replace("ST" . $year, "", $stmt->fetchColumn());
     } else {
         $lastId = 0;
     }
 
-    $newId = $lastId +1;
-    return "REG" . $year . str_pad($newId, 4, "0", STR_PAD_LEFT);
+    $newId = $lastId + 1;
+    return "ST" . $year . str_pad($newId, 4, "0", STR_PAD_LEFT);
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+     $selectedClass = $_POST['selected_class'];
     $file = $_FILES["file"]["tmp_name"];
     $st_rec = 0;
 
@@ -30,24 +33,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        if (($handle = fopen($file, "r")) !== false) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-                // Skip the header
-                if ($st_rec === 0) {
-                    $st_rec++;
-                    continue;
-                }
+        $spreadsheet = IOFactory::load($file);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
 
-                // Expecting columns: fname, mname, lname, gender, email
-                $fname = ucfirst(trim($data[0]));
-                $mname = ucfirst(trim($data[1]));
-                $lname = ucfirst(trim($data[2]));
-                $gender = trim($data[3]);
-                $email = trim($data[4]);
-                $class = $_POST["class"];
-                $reg_no = generateStudentRegNo($conn);
-                $pass = password_hash($reg_no, PASSWORD_DEFAULT);
-                $img = "DEFAULT";
+
+      
+        foreach ($sheetData as $i => $row) {
+            if ($i === 0) continue; // Skip header
+
+            $fname = ucfirst(trim($row[0]));
+            $mname = ucfirst(trim($row[1]));
+            $lname = ucfirst(trim($row[2]));
+            $gender = trim($row[3]);
+            $email = trim($row[4]);
+            $reg_no = generateStudentRegNo($conn);
+            $pass = password_hash($reg_no, PASSWORD_DEFAULT);
+            $img = "DEFAULT";
 
                 // Check for existing student/staff
                 $stmt = $conn->prepare("SELECT id FROM tbl_staff WHERE email = ? OR id = ? 
@@ -55,8 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                         SELECT id FROM tbl_students WHERE email = ? OR id = ?");
                 $stmt->execute([$email, $reg_no, $email, $reg_no]);
 
-                // if ($stmt->rowCount() === 0) {
-                    // Validate name (no digits)
                     if (
                         !preg_match("~[0-9]+~", $fname) &&
                         !preg_match("~[0-9]+~", $mname) &&
@@ -72,22 +71,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             $lname,
                             $gender,
                             $email,
-                            $class,
+                            $selectedClass,
                             $pass,
                             $img
                         ]);
                     }
-                // }
 
                 $st_rec++;
             }
-
-            fclose($handle);
-            $_SESSION["reply"] = [["success", "CSV import completed"]];
+            $_SESSION["reply"] = [["success", "Students imported completed"]];
             header("location:../import_students");
-        } else {
-            echo "Could not open the file.";
-        }
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }

@@ -87,8 +87,8 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
 
                                     <div class="mb-2">
                                         <label class="form-label">Select Class</label>
-                                        <select class="form-control select2" name="class" required style="width: 100%;">
-                                        <option value="" selected disabled> Select One</option>
+                                        <select id="class_selected" class="form-control select2" name="selected_class" required style="width: 100%;">
+                                       <option value="" selected disabled> Select One</option>
                                         <?php
                                         try {
                                         $conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
