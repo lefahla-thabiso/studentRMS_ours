@@ -169,26 +169,39 @@ $pdf->SetFont('helvetica', '', 10, '', true);
 
 $pdf->cell(0, 0, '', 0, 1, 'C');
 
+// $htmls = '<table border="1" cellpadding="5">
+// <tr>
+// <td>DIVISION</td>
+// <td>BOYS</td>
+// <td>GIRLS</td>
+// <td>Total</td>
+// </tr>
+// ';
+
 $htmls = '<table border="1" cellpadding="5">
-<tr>
-<td>DIVISION</td>
-<td>BOYS</td>
+<tr><td>BOYS</td>
 <td>GIRLS</td>
 <td>Total</td>
 </tr>
 ';
-
 foreach ($divisions as $key => $value) {
+
+// $htmls = $htmls.'
+// <tr>
+// <td>'.$value[0].'</td>
+// <td>'.$_MATOKEO[$value[0]]['BOYS'].'</td>
+// <td>'.$_MATOKEO[$value[0]]['GIRLS'].'</td>
+// <td>'.$_MATOKEO[$value[0]]['BOYS']+$_MATOKEO[$value[0]]['GIRLS'].'</td>
+// </tr>
+// ';
 
 $htmls = $htmls.'
 <tr>
-<td>'.$value[0].'</td>
 <td>'.$_MATOKEO[$value[0]]['BOYS'].'</td>
 <td>'.$_MATOKEO[$value[0]]['GIRLS'].'</td>
 <td>'.$_MATOKEO[$value[0]]['BOYS']+$_MATOKEO[$value[0]]['GIRLS'].'</td>
 </tr>
 ';
-
 
 }
 
