@@ -71,7 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!$students) {
-            echo "Error: No students found for this class.";
+            // echo "Error: No students found for this class.";
+        $_SESSION['reply'] = array (array("error",'No registered students for selected grade class'));
+        header("Location: ../import_results");
+
             fclose($fp);
             exit;
         }
