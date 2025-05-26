@@ -106,7 +106,45 @@ function set_announcement(id) {
 
     $.ajax({
         type: 'POST',
-        url: 'app/ajax/fetch_announcement.php',
+        url: 'app/ajax/fetch_blocked_students.php',
+        data: 'id=' + id + '&submit=1',
+        success: function(announcement_data) {
+            document.getElementById('ajax_callback').innerHTML = announcement_data;
+
+            $('#summernote2').summernote({
+                tabsize: 2,
+                height: 120,
+                fontNames: ['Comic Sans MS']
+            });
+
+        }
+    });
+}
+
+function set_block_student(id) { 
+  $("#ajax_callback").html("<p class='text-center'>Loading...</p>");
+
+  $.ajax({
+    url: "admin/core/get_blocked_student.php",
+    method: "POST",
+    data: { id: id },
+    success: function(response) {
+      $("#ajax_callback").html(response);
+    },
+    error: function() {
+      $("#ajax_callback").html("<p class='text-danger'>Failed to load data.</p>");
+    }
+  });
+}
+
+
+function set_blocked_student(id) {
+    var loader = "<div class='d-flex justify-content-center'><div class='spinner-border' style='height:16px; width:16px; margin-top:2px;'  role='status'><span class='sr-only'></span></div>&nbsp;Fetching information, please wait..</div>";
+    document.getElementById('ajax_callback').innerHTML = '<div class="alert alert-dismissible alert-info"><strong>' + loader + '</strong> </div>';
+
+    $.ajax({
+        type: 'POST',
+        url: 'app/ajax/fetch_blocked_students.php',
         data: 'id=' + id + '&submit=1',
         success: function(announcement_data) {
             document.getElementById('ajax_callback').innerHTML = announcement_data;

@@ -183,7 +183,9 @@ break;
 												<td>
 													<?php echo $row[3]; ?>
 												</td>
-												<td align="center"> <a onclick="set_announcement('<?php echo $row[0]; ?>');" class="btn btn-primary btn-sm" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a> <a onclick="del('academic/core/drop_announcement?id=<?php echo $row[0]; ?>', 'Delete Announcement?');" class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a> </td>
+												<td align="center"> <a onclick="set_announcement('<?php echo $row[0]; ?>');" 
+												class="btn btn-primary btn-sm" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a> 
+												<a onclick="del('academic/core/drop_announcement?id=<?php echo $row[0]; ?>', 'Delete Announcement?');" class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a> </td>
 											</tr>
 											<?php
 }
