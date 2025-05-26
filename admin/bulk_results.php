@@ -91,6 +91,7 @@ header("location:./");
 <li><a class="treeview-item" href="admin/register_students"><i class="icon bi bi-circle-fill"></i> Register Students</a></li>
 <li><a class="treeview-item" href="admin/import_students"><i class="icon bi bi-circle-fill"></i> Import Students</a></li>
 <li><a class="treeview-item" href="admin/manage_students"><i class="icon bi bi-circle-fill"></i> Manage Students</a></li>
+<li><a class="treeview-item" href="admin/block"><i class="icon bi bi-circle-fill"></i> Block Student</a></li>
 
 </ul>
 </li>
