@@ -184,15 +184,19 @@ if ($res == "1" && $level == "0") {
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="editModalLabel">Edit blocked student</h5> </div>
-						<div class="modal-body" id="ajax_callback"> </div>
-					</div>
-				</div>
-			</div>
+			<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit blocked student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="ajax_callback"></div> <!-- Important -->
+      </div>
+    </div>
+  </div>
+</div>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="tile">
@@ -270,7 +274,18 @@ if ($res == "1" && $level == "0") {
 						<?php echo $row[5]; ?>
 					</td>
 					<td> <?php echo $row[7]?> </td>
-					<td align="center"> <a onclick="set_announcement('<?php echo $row[0]; ?>');" class="btn btn-primary btn-sm" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a> <a onclick="del('academic/core/drop_announcement?id=<?php echo $row[0]; ?>', 'Delete Announcement?');" class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a> </td>
+					<td align="center"> 
+						<a onclick="set_blocked_student('<?php echo $row[0]; ?>');"
+							class="btn btn-primary btn-sm" href="javascript:void(0);" 
+							data-bs-toggle="modal" data-bs-target="#editModal">
+							Edit
+						</a>
+
+						<a onclick="del('admin/core/unblock_student?id=<?php echo $row[0]; ?>', 'Delete blocked?');" 
+							class="btn btn-danger btn-sm" href="javascript:void(0);">
+								Delete
+						</a> 
+					</td>
 				</tr>
 				<?php
               }
@@ -285,6 +300,25 @@ if ($res == "1" && $level == "0") {
 				</div>
 			</div>
 		</main>
+		<script>
+function set_blocked_student(id) {
+  $('#ajax_callback').html('<p>Loading...</p>');
+
+  $.ajax({
+    url: 'admin/core/get_blocked_student.php',
+    type: 'POST',
+    data: { id: id },
+    success: function(response) {
+      $('#ajax_callback').html(response);
+    },
+    error: function(xhr, status, error) {
+      $('#ajax_callback').html('<p class="text-danger">Failed to load data.</p>');
+      console.error("AJAX Error:", status, error);
+    }
+  });
+}
+</script>
+
 		<script src="js/jquery-3.7.0.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
