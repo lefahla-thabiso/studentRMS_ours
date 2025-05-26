@@ -101,75 +101,7 @@
 
         <div class="row">
             <div class="col-md-12">
-               <?php
-					   try {
-                            $conn = new PDO(
-                                'mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', 
-                                DBUser, 
-                                DBPass
-                            );
-
-							$stmt = $conn->prepare("SELECT * FROM tbl_block_student WHERE studentID = ? AND status = ?");
-							$stmt->execute([$account_id,1]);
-							$result = $stmt->fetchAll();
-							
-							if(count($result) > 0){
-								
-									 
-								 
-								?> 
-
-								<div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-												font-size:1.2rem;
-												font-weight:600;
-												color:#842029;
-												background-color:rgb(52, 174, 235);
-												border:1px solid #f5c2c7;
-												padding:15px 20px;
-												border-radius:5px;
-												text-align:center;
-												max-width:400px;
-												margin:20px auto;">
-									  Unable to view your result  
-
-										</div>
-
-										
-								<div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-												font-size:1.2rem;
-												font-weight:600;
-												color:#842029;
-												background-color:rgb(50, 196, 167);
-												border:1px solid #f5c2c7;
-												padding:15px 20px;
-												border-radius:5px;
-												text-align:center;
-												max-width:400px;
-												margin:20px auto;">
-									    <?php 
-											foreach ($result as $value) { 
-												echo $value[5] ; } 
-											?>  
-										</div>
-
-										<div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-												font-size:1.2rem;
-												font-weight:600;
-												color:#842029;
-												background-color:rgba(76, 235, 52);
-												border:1px solidrgb(7, 139, 117);
-												padding:15px 20px;
-												border-radius:5px;
-												text-align:center;
-												max-width:400px;
-												margin:20px auto;">
-									     	PLEASE CONTACT THE SCHOOL AT : (+266) 5858 5858
-										</div>
-								<?php
-								 
-							}else{
-								?>
-								<div class="tile">
+                <div class="tile">
                     <h4 class="tile-title"> <?php echo date("Y");?> Examination Results</h4>
 
                     <?php
@@ -473,13 +405,6 @@
                     ?>
 					</div>
 				</div>
-								<?php
-							}
-
-						}catch(PDOException $e) {
-                            echo "Connection failed: " . $e->getMessage();
-                        }
-               ?>
 			</div>
 		</main>
 		<script src="js/jquery-3.7.0.min.js"></script>
