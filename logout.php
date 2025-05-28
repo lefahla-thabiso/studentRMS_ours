@@ -21,12 +21,6 @@ try {
         DBPass
     );
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stmt = $conn->prepare(
-        "DELETE FROM tbl_login_sessions WHERE session_key = ?"
-    );
-    $stmt->execute([$session_key]);
-
     setcookie("__SRMS__logged", "0", time() - 3600, "/");
     setcookie("__SRMS__key", "0", time() - 3600, "/");
 } catch (PDOException $e) {
