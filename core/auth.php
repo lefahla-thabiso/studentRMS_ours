@@ -3,29 +3,7 @@ session_start();
 chdir('../');
 require_once('db/config.php');
 require_once('const/rand.php');
-
-function isLoggedIn($studentId)
-{
-    $studentLoggedIn = false;
-
-    try {
-        $conn = new PDO('mysql:host=' . DBHost . ';dbname=' . DBName . ';charset=' . DBCharset, DBUser, DBPass);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $conn->prepare("SELECT session_key FROM tbl_login_sessions WHERE student = ?");
-        $stmt->execute([$studentId]);
-
-        $result = $stmt->fetchAll();
-
-        // If there's no session entry, student must reset password
-        $studentLoggedIn = count($result) > 0;
-
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
-
-    return $studentLoggedIn;
-}
+ 
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
