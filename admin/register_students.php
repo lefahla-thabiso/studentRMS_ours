@@ -5,6 +5,21 @@ require_once('db/config.php');
 require_once('const/school.php');
 require_once('const/check_session.php');
 if ($res == "1" && $level == "0") {}else{header("location:../");}
+
+function generateStudentRegNo($conn) {
+    $year = date('Y');
+    $stmt = $conn->query("SELECT id FROM tbl_students ORDER BY id DESC LIMIT 1");
+
+    if ($stmt->rowCount() > 0) {
+        $lastId = (int) str_replace("ST" . $year, "", $stmt->fetchColumn());
+    } else {
+        $lastId = 0;
+    }
+
+    $newId = $lastId + 1;
+    return "ST" . $year . str_pad($newId, 4, "0", STR_PAD_LEFT);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,28 +33,32 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
     <base href="../">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="icon" href="images/icon.ico">
-    <link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css"
+        href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
     <link type="text/css" rel="stylesheet" href="loader/waitMe.css">
     <link rel="stylesheet" href="select2/dist/css/select2.min.css">
 </head>
 
 <body class="app sidebar-mini">
-    
+
     <header class="app-header"><a class="app-header__logo" href="javascript:void(0);">SRMS</a>
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-        
+
         <ul class="app-nav">
-            
-            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
+
+            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown"
+                    aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                    <li><a class="dropdown-item" href="admin/profile"><i class="bi bi-person me-2 fs-5"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout</a></li>
+                    <li><a class="dropdown-item" href="admin/profile"><i class="bi bi-person me-2 fs-5"></i> Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i>
+                            Logout</a></li>
                 </ul>
             </li>
         </ul>
     </header>
-    
+
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
@@ -49,20 +68,34 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item" href="admin"><i class="app-menu__icon feather icon-monitor"></i><span class="app-menu__label">Dashboard</span></a></li>
-            <li><a class="app-menu__item" href="admin/academic"><i class="app-menu__icon feather icon-user"></i><span class="app-menu__label">Academic Account</span></a></li>
-            <li><a class="app-menu__item" href="admin/teachers"><i class="app-menu__icon feather icon-user"></i><span class="app-menu__label">Teachers</span></a></li>
-            <li class="treeview is-expanded"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-users"></i><span class="app-menu__label">Students</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+            <li><a class="app-menu__item" href="admin"><i class="app-menu__icon feather icon-monitor"></i><span
+                        class="app-menu__label">Dashboard</span></a></li>
+            <li><a class="app-menu__item" href="admin/academic"><i class="app-menu__icon feather icon-user"></i><span
+                        class="app-menu__label">Academic Account</span></a></li>
+            <li><a class="app-menu__item" href="admin/teachers"><i class="app-menu__icon feather icon-user"></i><span
+                        class="app-menu__label">Teachers</span></a></li>
+            <li class="treeview is-expanded"><a class="app-menu__item" href="javascript:void(0);"
+                    data-toggle="treeview"><i class="app-menu__icon feather icon-users"></i><span
+                        class="app-menu__label">Students</span><i
+                        class="treeview-indicator bi bi-chevron-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item active" href="admin/register_students"><i class="icon bi bi-circle-fill"></i> Register Students</a></li>
-                    <li><a class="treeview-item" href="admin/import_students"><i class="icon bi bi-circle-fill"></i> Import Students</a></li>
-                    <li><a class="treeview-item" href="admin/manage_students"><i class="icon bi bi-circle-fill"></i> Manage Students</a></li>
-<li><a class="treeview-item" href="admin/block"><i class="icon bi bi-circle-fill"></i> Block Student</a></li>
+                    <li><a class="treeview-item active" href="admin/register_students"><i
+                                class="icon bi bi-circle-fill"></i> Register Students</a></li>
+                    <li><a class="treeview-item" href="admin/import_students"><i class="icon bi bi-circle-fill"></i>
+                            Import Students</a></li>
+                    <li><a class="treeview-item" href="admin/manage_students"><i class="icon bi bi-circle-fill"></i>
+                            Manage Students</a></li>
+                    <li><a class="treeview-item" href="admin/block"><i class="icon bi bi-circle-fill"></i> Block
+                            Student</a></li>
                 </ul>
             </li>
-            <li><a class="app-menu__item" href="admin/report"><i class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report Tool</span></a></li>
-            <li><a class="app-menu__item" href="admin/smtp"><i class="app-menu__icon feather icon-mail"></i><span class="app-menu__label">SMTP Settings</span></a></li>
-            <li><a class="app-menu__item" href="admin/system"><i class="app-menu__icon feather icon-settings"></i><span class="app-menu__label">System Settings</span></a></li>
+            <li><a class="app-menu__item" href="admin/report"><i
+                        class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report
+                        Tool</span></a></li>
+            <li><a class="app-menu__item" href="admin/smtp"><i class="app-menu__icon feather icon-mail"></i><span
+                        class="app-menu__label">SMTP Settings</span></a></li>
+            <li><a class="app-menu__item" href="admin/system"><i class="app-menu__icon feather icon-settings"></i><span
+                        class="app-menu__label">System Settings</span></a></li>
         </ul>
     </aside>
     <main class="app-content">
@@ -71,30 +104,63 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
                 <h1>Register Students</h1>
             </div>
         </div>
-        
-        
+
+
         <div class="row">
             <div class="col-md-6 center_form">
                 <div class="tile">
                     <div class="tile-body">
                         <div class="table-responsive">
                             <h3 class="tile-title">Register Students</h3>
-                            <form enctype="multipart/form-data" action="admin/core/new_student" class="app_frm" method="POST" autocomplete="OFF">
+                            <form enctype="multipart/form-data" action="admin/core/new_student" class="app_frm"
+                                method="POST" autocomplete="OFF">
+                                <?php 
+                                     try {
+                                    $conn = new PDO(
+                                        "mysql:host=" .
+                                            DBHost .
+                                            ";dbname=" .
+                                            DBName .
+                                            ";charset=" .
+                                            DBCharset .
+                                            ";collation=" .
+                                            DBCollation .
+                                            ";prefix=" .
+                                            DBPrefix .
+                                            "",
+                                        DBUser,
+                                        DBPass
+                                    );
+
+
+
+                                    } catch (PDOException $e) {
+                                    echo "Connection failed: " . $e->getMessage();
+                                }
+
+                                ?>
                                 <div class="mb-2">
-                                    <label style="display: none;" class="form-label">Registration Number</label>
-                                    <input type="hidden" name="regno" required class="form-control" type="text" placeholder="Enter registration number">
+                                    <label class="form-label">Registration Number</label>
+                                    <input name="regno" value="<?= htmlspecialchars(generateStudentRegNo($conn)) ?>"
+                                        readonly required class="form-control" type="text"
+                                        placeholder="Enter registration number">
                                 </div>
+                                <?php ?>
+
                                 <div class="mb-2">
                                     <label class="form-label">First Name</label>
-                                    <input name="fname" required class="form-control" type="text" onkeypress="return lettersOnly(event)" placeholder="Enter first name">
+                                    <input name="fname" required class="form-control" type="text"
+                                        onkeypress="return lettersOnly(event)" placeholder="Enter first name">
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Middle Name</label>
-                                    <input name="mname" required class="form-control" type="text" onkeypress="return lettersOnly(event)" placeholder="Enter middle name">
+                                    <input name="mname" required class="form-control" type="text"
+                                        onkeypress="return lettersOnly(event)" placeholder="Enter middle name">
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Last Name</label>
-                                    <input name="lname" required class="form-control" type="text" onkeypress="return lettersOnly(event)" placeholder="Enter last name">
+                                    <input name="lname" required class="form-control" type="text"
+                                        onkeypress="return lettersOnly(event)" placeholder="Enter last name">
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Gender</label>
@@ -104,7 +170,7 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="mb-2">
                                     <label class="form-label">Select Class</label>
                                     <select class="form-control select2" name="class" required style="width: 100%;">
@@ -132,39 +198,41 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
                                         ?>
                                     </select>
                                 </div>
-                                
+
                                 <div class="mb-2">
                                     <label class="form-label">Email</label>
-                                    <input name="email" required class="form-control" type="text" placeholder="Enter email address">
+                                    <input name="email" required class="form-control" type="text"
+                                        placeholder="Enter email address">
                                 </div>
-                                <div class="mb-2">
+                                <!-- <div class="mb-2">
                                     <label class="form-label">Password</label>
                                     <input type="password" class="form-control" id="npass" name="password" placeholder="***************">
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Confirm Password</label>
                                     <input type="password" class="form-control" id="cnpass" placeholder="***************">
-                                </div>
-                                
+                                </div> -->
+
                                 <div class="mb-3">
                                     <label class="form-label">Display Image (Optional)</label>
                                     <input name="image" class="form-control" type="file" accept=".png, .jpg, .jpeg">
                                 </div>
-                                
+
                                 <div class="">
-                                    <button id="sub_btnp2" class="btn btn-primary app_btn" type="submit">Register Student</button>
+                                    <button id="sub_btnp2" class="btn btn-primary app_btn" type="submit">Register
+                                        Student</button>
                                 </div>
                             </form>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
         </div>
-        
+
     </main>
-    
+
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
@@ -174,14 +242,14 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
     <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
     <script type="text/javascript">
-        $('#srmsTable').DataTable({
-            "sort": false
-        });
+    $('#srmsTable').DataTable({
+        "sort": false
+    });
     </script>
     <script src="select2/dist/js/select2.full.min.js"></script>
     <?php require_once('const/check-reply.php'); ?>
     <script>
-        $('.select2').select2()
+    $('.select2').select2()
     </script>
 </body>
 

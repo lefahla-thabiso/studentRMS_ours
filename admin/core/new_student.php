@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $gender = $_POST["gender"];
     $class = $_POST["class"];
     $role = "3";
-    $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $pass = password_hash($_POST["regno"], PASSWORD_DEFAULT);
     $status = "1";
     $photo = serialize($_FILES["image"]);
 
