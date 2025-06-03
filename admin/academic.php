@@ -146,8 +146,8 @@ foreach($result as $row) {
 <label class="form-label">Gender</label>
 <select disabled class="form-control" name="gender" required>
 <option selected disabled value="">Select gender</option>
-<option <?php if ($row[4] == "Male") { print ' selected '; } ?> value="Male">Male</option>
-<option <?php if ($row[4] == "Female") { print ' selected '; } ?> value="Female">Female</option>
+<option <?php if ($row[3] == "Male") { print ' selected '; } ?> value="Male">Male</option>
+<option <?php if ($row[3] == "Female") { print ' selected '; } ?> value="Female">Female</option>
 </select>
 </div>
 
