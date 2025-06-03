@@ -13,7 +13,7 @@ try {
 $conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$stmt = $conn->prepare("DELETE FROM tbl_staff WHERE id = ?");
+$stmt = $conn->prepare("UPDATE tbl_staff SET STATUS=3 WHERE id = ?");
 $stmt->execute([$id]);
 
 $_SESSION['reply'] = array (array("success",'Academic deleted successfully'));
