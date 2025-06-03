@@ -84,7 +84,7 @@ try {
 $conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$stmt = $conn->prepare("SELECT * FROM tbl_staff WHERE level = '1'");
+$stmt = $conn->prepare("SELECT * FROM tbl_staff WHERE level = '1' AND STATUS < 3");
 $stmt->execute();
 $result = $stmt->fetchAll();
 
