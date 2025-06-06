@@ -58,21 +58,21 @@ UNION SELECT id, email, password, level, status FROM tbl_students WHERE id = ? O
 
                         switch ($row[3]) {
                             case '0':
-                                header("location:../admin");
+                                header("location:../admin/index.php");
                                 break;
 
                             case '1':
-                                header("location:../academic");
+                                header("location:../academic/index.php");
                                 break;
 
                             case '2':
-                                header("location:../teacher");
+                                header("location:../teacher/index.php");
                                 break;
 
                             case '3':
 
                                 if ($studentLoggedIn) {
-                                    header("Location: ../student");
+                                    header("Location: ../student/index.php");
                                 } else {
                                     header("Location: ../student/settings.php");
                                 }

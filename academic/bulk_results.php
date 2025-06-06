@@ -89,7 +89,7 @@ header("location:./");
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item" href="academic"><i class="app-menu__icon feather icon-monitor"></i><span
+            <li><a class="app-menu__item" href="academic/index.php"><i class="app-menu__icon feather icon-monitor"></i><span
                         class="app-menu__label">Dashboard</span></a></li>
             <li><a class="app-menu__item" href="academic/terms"><i class="app-menu__icon feather icon-folder"></i><span
                         class="app-menu__label">Academic Terms</span></a></li>
