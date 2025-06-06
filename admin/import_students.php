@@ -55,7 +55,8 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item" href="admin"><i class="app-menu__icon feather icon-monitor"></i><span
+            <li><a class="app-menu__item" href="admin/index.php"><i
+                        class="app-menu__icon feather icon-monitor"></i><span
                         class="app-menu__label">Dashboard</span></a></li>
             <li><a class="app-menu__item" href="admin/academic"><i class="app-menu__icon feather icon-user"></i><span
                         class="app-menu__label">Academic Account</span></a></li>

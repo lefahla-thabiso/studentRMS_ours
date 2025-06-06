@@ -21,28 +21,32 @@ if ($res == "1" && $level == "1") {
     <base href="../">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="icon" href="images/icon.ico">
-    <link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css"
+        href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
     <link type="text/css" rel="stylesheet" href="loader/waitMe.css">
     <link rel="stylesheet" href="select2/dist/css/select2.min.css">
 </head>
 
 <body class="app sidebar-mini">
-    
+
     <header class="app-header"><a class="app-header__logo" href="javascript:void(0);">SRMS</a>
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-        
+
         <ul class="app-nav">
-            
-            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
+
+            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown"
+                    aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                    <li><a class="dropdown-item" href="academic/profile"><i class="bi bi-person me-2 fs-5"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout</a></li>
+                    <li><a class="dropdown-item" href="academic/profile"><i class="bi bi-person me-2 fs-5"></i>
+                            Profile</a></li>
+                    <li><a class="dropdown-item" href="logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i>
+                            Logout</a></li>
                 </ul>
             </li>
         </ul>
     </header>
-    
+
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
@@ -52,44 +56,66 @@ if ($res == "1" && $level == "1") {
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item" href="academic"><i class="app-menu__icon feather icon-monitor"></i><span class="app-menu__label">Dashboard</span></a></li>
-            <li><a class="app-menu__item" href="academic/terms"><i class="app-menu__icon feather icon-folder"></i><span class="app-menu__label">Academic Terms</span></a></li>
-            
-            <li><a class="app-menu__item" href="academic/classes"><i class="app-menu__icon feather icon-home"></i><span class="app-menu__label">Classes</span></a></li>
-            <li><a class="app-menu__item" href="academic/subjects"><i class="app-menu__icon feather icon-book"></i><span class="app-menu__label">Subjects</span></a></li>
-            <li><a class="app-menu__item" href="academic/combinations"><i class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">Subject Combinations</span></a></li>
-            <li class="treeview is-expanded"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-users"></i><span class="app-menu__label">Students</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+            <li><a class="app-menu__item" href="academic/index.php"><i
+                        class="app-menu__icon feather icon-monitor"></i><span
+                        class="app-menu__label">Dashboard</span></a></li>
+            <li><a class="app-menu__item" href="academic/terms"><i class="app-menu__icon feather icon-folder"></i><span
+                        class="app-menu__label">Academic Terms</span></a></li>
+
+            <li><a class="app-menu__item" href="academic/classes"><i class="app-menu__icon feather icon-home"></i><span
+                        class="app-menu__label">Classes</span></a></li>
+            <li><a class="app-menu__item" href="academic/subjects"><i class="app-menu__icon feather icon-book"></i><span
+                        class="app-menu__label">Subjects</span></a></li>
+            <li><a class="app-menu__item" href="academic/combinations"><i
+                        class="app-menu__icon feather icon-book-open"></i><span class="app-menu__label">Subject
+                        Combinations</span></a></li>
+            <li class="treeview is-expanded"><a class="app-menu__item" href="javascript:void(0);"
+                    data-toggle="treeview"><i class="app-menu__icon feather icon-users"></i><span
+                        class="app-menu__label">Students</span><i
+                        class="treeview-indicator bi bi-chevron-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item active" href="academic/promote_students"><i class="icon bi bi-circle-fill"></i> Promote or Demote Students</a></li>
+                    <li><a class="treeview-item active" href="academic/promote_students"><i
+                                class="icon bi bi-circle-fill"></i> Promote or Demote Students</a></li>
                 </ul>
             </li>
-            <li class="treeview"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i class="app-menu__icon feather icon-file-text"></i><span class="app-menu__label">Examination Results</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+            <li class="treeview"><a class="app-menu__item" href="javascript:void(0);" data-toggle="treeview"><i
+                        class="app-menu__icon feather icon-file-text"></i><span class="app-menu__label">Examination
+                        Results</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
                 <ul class="treeview-menu">
-                    
-                    <li><a class="treeview-item" href="academic/manage_results"><i class="icon bi bi-circle-fill"></i> Manage Results</a></li>
-                    <li><a class="treeview-item" href="academic/individual_results"><i class="icon bi bi-circle-fill"></i> Individual Results</a></li>
+
+                    <li><a class="treeview-item" href="academic/manage_results"><i class="icon bi bi-circle-fill"></i>
+                            Manage Results</a></li>
+                    <li><a class="treeview-item" href="academic/individual_results"><i
+                                class="icon bi bi-circle-fill"></i> Individual Results</a></li>
                 </ul>
             </li>
-            <li><a class="app-menu__item" href="academic/report"><i class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report Tool</span></a></li>
-            <li><a class="app-menu__item" href="academic/grading-system"><i class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading System</span></a></li>
+            <li><a class="app-menu__item" href="academic/report"><i
+                        class="app-menu__icon feather icon-bar-chart-2"></i><span class="app-menu__label">Report
+                        Tool</span></a></li>
+            <li><a class="app-menu__item" href="academic/grading-system"><i
+                        class="app-menu__icon feather icon-award"></i><span class="app-menu__label">Grading
+                        System</span></a></li>
             <!-- <li><a class="app-menu__item" href="academic/division-system"><i class="app-menu__icon feather icon-layers"></i><span class="app-menu__label">Division System</span></a></li> -->
-            <li><a class="app-menu__item" href="academic/announcement"><i class="app-menu__icon feather icon-bell"></i><span class="app-menu__label">Announcements</span></a></li>
+            <li><a class="app-menu__item" href="academic/announcement"><i
+                        class="app-menu__icon feather icon-bell"></i><span
+                        class="app-menu__label">Announcements</span></a></li>
         </ul>
     </aside>
     <main class="app-content">
-   <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-  <div class="row w-100" style="max-width : 1200px;">
-    <!-- Left Form -->
-    <div class="col-md-6">
-      <div class="tile">
-        <div class="tile-body">
-          <h3 class="tile-title">Promote Students</h3>
-          <form enctype="multipart/form-data" action="academic/core/promote_students" method="POST" autocomplete="off">
-            <div class="mb-2">
-              <label class="form-label">Select Class</label>
-              <select class="form-control select2" name="class" required>
-                <option value="" selected disabled>Select One</option>
-                <?php
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="row w-100" style="max-width : 1200px;">
+                <!-- Left Form -->
+                <div class="col-md-6">
+                    <div class="tile">
+                        <div class="tile-body">
+                            <h3 class="tile-title">Promote Students</h3>
+                            <form enctype="multipart/form-data" action="academic/core/promote_students" method="POST"
+                                autocomplete="off">
+                                <div class="mb-2">
+                                    <label class="form-label">Select Class</label>
+                                    <select class="form-control select2" name="class" required>
+                                        <option value="" selected disabled>Select One</option>
+                                        <?php
                 try {
                   $conn = new PDO("mysql:host=" . DBHost . ";dbname=" . DBName, DBUser, DBPass);
                   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -116,40 +142,41 @@ if ($res == "1" && $level == "1") {
                   echo "Connection failed: " . $e->getMessage();
                 }
                 ?>
-              </select>
-            </div>
+                                    </select>
+                                </div>
 
-            <div class="mb-3">
-              <label class="form-label">Promote to Class</label>
-              <select class="form-control select2" name="class2" required>
-                <option value="" selected disabled>Select One</option>
-                <?php
+                                <div class="mb-3">
+                                    <label class="form-label">Promote to Class</label>
+                                    <select class="form-control select2" name="class2" required>
+                                        <option value="" selected disabled>Select One</option>
+                                        <?php
                 foreach ($classes as $row) {
                   echo "<option value='{$row[0]}'>{$row[1]}</option>";
                 }
                 ?>
-              </select>
-            </div>
+                                    </select>
+                                </div>
 
-            <div>
-              <button class="btn btn-primary" type="submit">Promote Students</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+                                <div>
+                                    <button class="btn btn-primary" type="submit">Promote Students</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Right Form -->
-    <div class="col-md-6">
-      <div class="tile">
-        <div class="tile-body">
-          <h3 class="tile-title">Demote Students</h3>
-          <form enctype="multipart/form-data" action="academic/core/demote_students" method="POST" autocomplete="off">
-            <div class="mb-2">
-              <label class="form-label">Select Student</label>
-              <select class="form-control select2" name="selected_student" required>
-                <option value="" selected disabled>Select One</option>
-                <?php
+                <!-- Right Form -->
+                <div class="col-md-6">
+                    <div class="tile">
+                        <div class="tile-body">
+                            <h3 class="tile-title">Demote Students</h3>
+                            <form enctype="multipart/form-data" action="academic/core/demote_students" method="POST"
+                                autocomplete="off">
+                                <div class="mb-2">
+                                    <label class="form-label">Select Student</label>
+                                    <select class="form-control select2" name="selected_student" required>
+                                        <option value="" selected disabled>Select One</option>
+                                        <?php
 
                 
                 foreach ($students as $row) {
@@ -164,34 +191,34 @@ if ($res == "1" && $level == "1") {
                   }
                 // }
                 ?>
-              </select>
-            </div>
+                                    </select>
+                                </div>
 
-            <div class="mb-3">
-              <label class="form-label"><b>Demote to Class</b></label>
-              <select class="form-control select2" name="student_demoted_to" required>
-                <option value="" selected disabled>Select One</option>
-                <?php
+                                <div class="mb-3">
+                                    <label class="form-label"><b>Demote to Class</b></label>
+                                    <select class="form-control select2" name="student_demoted_to" required>
+                                        <option value="" selected disabled>Select One</option>
+                                        <?php
                 foreach ($classes as $row) {
                   echo "<option value='{$row[0]}'>{$row[1]}</option>";
                 }
                 ?>
-              </select>
-            </div>
+                                    </select>
+                                </div>
 
-            <div>
-              <button class="btn btn-primary" type="submit">Demote a Student</button>
+                                <div>
+                                    <button class="btn btn-primary" type="submit">Demote a Student</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </form>
         </div>
-      </div>
-    </div>
-
-  </div>
-</div>
 
     </main>
-    
+
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
@@ -201,14 +228,14 @@ if ($res == "1" && $level == "1") {
     <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.html"></script>
     <script type="text/javascript">
-        $('#srmsTable').DataTable({
-            "sort": false
-        });
+    $('#srmsTable').DataTable({
+        "sort": false
+    });
     </script>
     <script src="select2/dist/js/select2.full.min.js"></script>
     <?php require_once "const/check-reply.php"; ?>
     <script>
-        $('.select2').select2()
+    $('.select2').select2()
     </script>
 </body>
 
