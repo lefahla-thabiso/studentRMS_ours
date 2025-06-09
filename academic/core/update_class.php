@@ -2,10 +2,11 @@
 chdir('../../');
 session_start();
 require_once('db/config.php');
+$_POST = array_map('trim', $_POST);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-$name = ucfirst($_POST['name']);
+$name = ($_POST['name']);
 $id = $_POST['id'];
 
 try {

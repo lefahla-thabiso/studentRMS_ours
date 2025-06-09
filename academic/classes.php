@@ -173,34 +173,27 @@ $stmt = $conn->prepare("SELECT * FROM tbl_classes");
 $stmt->execute();
 $result = $stmt->fetchAll();
 
-foreach($result as $row)
-{
+ foreach($result as $row)
+    {
 ?>
-                                    <textarea style="display:none;" id="class_<?php echo $row[0]; ?>">
-												<?php echo $row[1]; ?>
-											</textarea>
+                                    <textarea style="display:none;"
+                                        id="class_<?php echo $row[0]; ?>"><?php echo trim($row[1]); ?></textarea>
                                     <tr>
-                                        <td>
-                                            <?php echo $row[1]; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row[2]; ?>
-                                        </td>
-                                        <td align="center"> <a onclick="set_class('<?php echo $row[0]; ?>');"
+                                        <td><?php echo htmlspecialchars(trim($row[1])); ?></td>
+                                        <td><?php echo $row[2]; ?></td>
+                                        <td align="center">
+                                            <a onclick="set_class('<?php echo $row[0]; ?>');"
                                                 class="btn btn-primary btn-sm" href="javascript:void(0);"
-                                                data-bs-toggle="modal" data-bs-target="#editModal">Edit</a> <a
-                                                onclick="del('academic/core/drop_class?id=<?php echo $row[0]; ?>', 'Delete Class?');"
+                                                data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                                            <a onclick="del('academic/core/drop_class?id=<?php echo $row[0]; ?>', 'Delete Class?');"
                                                 class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a>
                                         </td>
                                     </tr>
                                     <?php
+    }
+} catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
-
-}catch(PDOException $e)
-{
-echo "Connection failed: " . $e->getMessage();
-}
-
 ?>
                                 </tbody>
                             </table>

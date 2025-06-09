@@ -6,7 +6,7 @@ require_once('const/school.php');
 require_once('const/check_session.php');
 require_once('tcpdf/tcpdf.php');
 require_once('const/calculations.php');
-
+ob_start();
 if ($res == "1" && $level == "1" && isset($_GET['term'])) {}else{header("location:../");}
 
 $term = $_GET['term'];
