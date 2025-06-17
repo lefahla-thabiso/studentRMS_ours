@@ -207,11 +207,11 @@ function generateStudentRegNo($conn) {
                                 </div>
                                 <!-- <div class="mb-2">
                                     <label class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="npass" name="password" placeholder="***************">
+                                    <input type="password" class="form-control" id="_npass" name="password" placeholder="***************">
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="cnpass" placeholder="***************">
+                                    <input type="password" class="form-control" id="_cnpass" placeholder="***************">
                                 </div> -->
 
                                 <div class="mb-3">

@@ -24,12 +24,13 @@ $lname = ucfirst($r[1]);
 $email = $r[2];
 $gender = $r[3];
 $role = '2';
-$pass = password_hash($r[5], PASSWORD_DEFAULT);
+$pass = password_hash($r[0], PASSWORD_DEFAULT);
 $status = $r[4];
+
 if ($status == "Active") {
-$status = 1;
-}else{
 $status = 0;
+}else{
+$status = 1;
 }
 
 $stmt = $conn->prepare("SELECT email FROM tbl_staff WHERE email = ? UNION SELECT email FROM tbl_students WHERE email = ?");
@@ -59,7 +60,7 @@ $st_rec++;
 $_SESSION['reply'] = array (array("success",'Data import completed'));
 header("location:../teachers");
 
-} else {
+} else { 
 echo SimpleXLSX::parseError();
 }
 

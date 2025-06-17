@@ -122,7 +122,7 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
                                 <input required name="email" class="form-control" type="email"
                                     placeholder="Enter email address">
                             </div>
-                            <div class="mb-2">
+                            <!-- <div class="mb-2">
                                 <label class="form-label">Password</label>
                                 <input type="password" class="form-control" id="npass" name="password"
                                     placeholder="***************">
@@ -130,7 +130,7 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
                             <div class="mb-2">
                                 <label class="form-label">Confirm Password</label>
                                 <input type="password" class="form-control" id="cnpass" placeholder="***************">
-                            </div>
+                            </div> -->
                             <div class="mb-2">
                                 <label class="form-label">Gender</label>
                                 <select class="form-control" name="gender" required>

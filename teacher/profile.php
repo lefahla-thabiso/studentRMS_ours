@@ -144,7 +144,8 @@ if ($res == "1" && $level == "2") {}else{header("location:../");}
                         </div>
                         <div class="mb-2">
                             <label class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="npass" name="npassword"
+                            <!-- <input type="password" class="form-control" id="npass" name="npassword" -->
+                            <input type="password" class="form-control" id="_npass" name="npassword"
                                 placeholder="Enter your new password">
                         </div>
                         <div class="mb-3">

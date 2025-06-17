@@ -10,7 +10,9 @@ $lname = ucfirst($_POST['lname']);
 $email = $_POST['email'];
 $gender = $_POST['gender'];
 $role = '2';
-$pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+// $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$pass = password_hash($fname, PASSWORD_DEFAULT);
+
 $status = $_POST['status'];
 
 try {
