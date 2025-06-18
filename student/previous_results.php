@@ -72,7 +72,7 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 <head>
-    <title>SRMS - Vieiwng past Resultss</title>
+    <title>SRMS - Vieiwing past Resultss</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -161,14 +161,14 @@
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1>Vieiwng past Results</h1>
+                <h1>Viewing past Results</h1>
             </div>
         </div>
 
         <div class="row" style="margin-top: -1%;">
             <div class="col-md-12 center_form">
                 <div class="tile">
-                    <h4 class="tile-title">Vieiwng past Results</h4>
+                    <h4 class="tile-title">Viewing past Results</h4>
 
                     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="autoForm">
                         <div class="mb-2">

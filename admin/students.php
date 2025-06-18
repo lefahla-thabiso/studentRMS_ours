@@ -102,6 +102,56 @@ $matches = implode(',', $matches);
                 <h1>Manage Students</h1>
             </div>
         </div>
+        <div class="modal fade" id="cPassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Change Student Password</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="app_frm" method="POST" autocomplete="OFF"
+                            action="admin/core/change_student_password">
+                            <div class="mb-2">
+                                <label class="form-label">First Name</label>
+                                <input id="cPassfname" required name="cPassfname" class="form-control" type="text"
+                                    onkeypress="return lettersOnly(event)" placeholder="Enter first name">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Last Name</label>
+                                <input id="cPasslname" required name="cPasslname" class="form-control" type="text"
+                                    onkeypress="return lettersOnly(event)" placeholder="Enter last name">
+                            </div>
+
+                            <input name="cPassid" id="cPassid">
+                            <!-- <div class="mb-2">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="cpass" name="cpassword"
+                                    placeholder="Enter your current password">
+                            </div> -->
+                            <br>___________________________________________</br>
+                            <div class="mb-2">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="nPass" name="nPass"
+                                    placeholder="Enter your new password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="cnPass" name="cnPass"
+                                    placeholder="Repeat your new password">
+                            </div>
+
+                            <button type="submit" id="btn_password" name="submit" value="1"
+                                class="btn btn-primary">Change
+                                Password</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
         <div class="row">
@@ -187,12 +237,16 @@ if ($row[9] == "DEFAULT") {
                                                 id="img_<?php echo $row[0]; ?>"><?php echo $row[9]; ?></textarea>
                                             <textarea style="display:none;"
                                                 id="status_<?php echo $row[0]; ?>"><?php echo $row[10]; ?></textarea>
-
+                                            <button
+                                                onclick="change_password('<?php echo $row[0]; ?>', '<?php echo $row[3]; ?>', '<?php echo $row[7]; ?>');"
+                                                data-bs-toggle="modal" data-bs-target="#cPassModal"
+                                                class="btn btn-primary btn-sm" type="button" title="Change Password">🔑
+                                            </button>
                                             <a onclick="set_student('<?php echo $row[0]; ?>');"
                                                 class="btn btn-primary btn-sm" href="javascript:void(0);"
-                                                data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                                                data-bs-toggle="modal" data-bs-target="#editModal">✏️</a>
                                             <a onclick="del('admin/core/drop_student?id=<?php echo $row[0]; ?>&img=<?php echo $row[9]; ?>', 'Delete Student?');"
-                                                class="btn btn-danger btn-sm" href="javascript:void(0);">Delete</a>
+                                                class="btn btn-danger btn-sm" href="javascript:void(0);"> 🗑️</a>
                                         </td>
 
                                     </tr>
@@ -256,6 +310,7 @@ echo "Connection failed: " . $e->getMessage();
                                     style="width: 100%;">
                                     <option value="" selected disabled> Select One</option>
                                     <?php
+
 try {
 $conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -306,6 +361,17 @@ echo "Connection failed: " . $e->getMessage();
 
     </main>
 
+    <script>
+    function change_password(id, gender, status) {
+        document.getElementById("cPassfname").value = document.getElementById(
+            "fname_" + id
+        ).value;
+        document.getElementById("cPasslname").value = document.getElementById(
+            "lname_" + id
+        ).value;
+        document.getElementById("cPassid").value = id;
+    }
+    </script>
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
