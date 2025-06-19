@@ -22,6 +22,7 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
         href="cdn.jsdelivr.net/npm/bootstrap-icons%401.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
     <link type="text/css" rel="stylesheet" href="loader/waitMe.css">
+
 </head>
 
 <body class="app sidebar-mini">
@@ -212,6 +213,58 @@ if ($res == "1" && $level == "0") {}else{header("location:../");}
             </div>
         </div>
 
+
+        <div class="modal fade" id="cPassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Change Teacher Password</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="app_frm" method="POST" autocomplete="OFF"
+                            action="admin/core/change_teacher_password">
+                            <div class="mb-2">
+                                <label class="form-label">First Name</label>
+                                <input id="cPassfname" required name="cPassfname" class="form-control" type="text"
+                                    onkeypress="return lettersOnly(event)" placeholder="Enter first name">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Last Name</label>
+                                <input id="cPasslname" required name="cPasslname" class="form-control" type="text"
+                                    onkeypress="return lettersOnly(event)" placeholder="Enter last name">
+                            </div>
+
+                            <input type="hidden" name="cPassid" id="cPassid">
+                            <!-- <div class="mb-2">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="cpass" name="cpassword"
+                                    placeholder="Enter your current password">
+                            </div> -->
+                            <br>___________________________________________</br>
+                            <div class="mb-2">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="nPass" name="nPass"
+                                    placeholder="Enter your new password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="cnPass" name="cnPass"
+                                    placeholder="Repeat your new password">
+                            </div>
+
+                            <button type="submit" id="btn_password" name="submit" value="1"
+                                class="btn btn-primary">Change
+                                Password</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="importModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="importModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -285,20 +338,35 @@ $st = '<span class="me-1 badge badge-pill bg-danger">Blocked</span>';
                                         <td><?php echo $row[4];?></td>
                                         <td><?php echo $row[3];?></td>
                                         <td width="100" align="center"><?php echo $st;?></td>
+
+
                                         <td width="120" align="center">
+
                                             <textarea style="display:none;"
                                                 id="fname_<?php echo $row[0]; ?>"><?php echo $row[1]; ?></textarea>
                                             <textarea style="display:none;"
                                                 id="lname_<?php echo $row[0]; ?>"><?php echo $row[2]; ?></textarea>
                                             <textarea style="display:none;"
                                                 id="email_<?php echo $row[0]; ?>"><?php echo $row[4]; ?></textarea>
+
+                                            <button
+                                                onclick="change_password('<?php echo $row[0]; ?>', '<?php echo $row[3]; ?>', '<?php echo $row[7]; ?>');"
+                                                data-bs-toggle="modal" data-bs-target="#cPassModal"
+                                                class="btn btn-primary btn-sm" type="button" title="Change Password">🔑
+                                            </button>
+
+
+
                                             <button
                                                 onclick="set_user('<?php echo $row[0]; ?>', '<?php echo $row[3]; ?>', '<?php echo $row[7]; ?>');"
                                                 data-bs-toggle="modal" data-bs-target="#editModal"
                                                 class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#editModal">Edit</button>
+                                                data-bs-target="#editModal" title="Edit"> ✏️ </button>
+
                                             <a onclick="del('admin/core/drop_user2?id=<?php echo $row[0]; ?>', 'Delete Teacher?');"
-                                                href="javascript:void(0);" class="btn btn-danger btn-sm">Delete</a>
+                                                href="javascript:void(0);" class="btn btn-danger btn-sm" title="Delete">
+                                                🗑️ </a>
+
                                         </td>
                                     </tr>
                                     <?php
@@ -319,6 +387,86 @@ echo "Connection failed: " . $e->getMessage();
         </div>
 
     </main>
+    <script>
+    function change_password(id, gender, status) {
+        document.getElementById("cPassfname").value = document.getElementById(
+            "fname_" + id
+        ).value;
+        document.getElementById("cPasslname").value = document.getElementById(
+            "lname_" + id
+        ).value;
+        document.getElementById("cPassid").value = id;
+    }
+
+    $("#btn_password").on("click", function() {
+        $("#btn_password").blur();
+        var new_pw = document.getElementById("cnPass").value;
+        var confirm_pw = document.getElementById("cnPass").value;
+
+        if (new_pw == "") {
+            Swal.fire({
+                title: "Please enter new password",
+                icon: "error",
+                showDenyButton: false,
+                confirmButtonText: "Okay",
+            });
+            return false;
+        }
+
+        if (new_pw.length < 8) {
+            Swal.fire({
+                title: "Password should be minimum 8 characters",
+                icon: "error",
+                showDenyButton: false,
+                confirmButtonText: "Okay",
+            });
+            return false;
+        }
+
+        if (confirm_pw == "") {
+            Swal.fire({
+                title: "Please enter confirmation password",
+                icon: "error",
+                showDenyButton: false,
+                confirmButtonText: "Okay",
+            });
+            return false;
+        }
+
+        if (confirm_pw.length < 8) {
+            Swal.fire({
+                title: "Confirmation password should be minimum 8 characters",
+                icon: "error",
+                showDenyButton: false,
+                confirmButtonText: "Okay",
+            });
+            return false;
+        }
+
+        if (confirm_pw != new_pw) {
+            Swal.fire({
+                title: "Password confirmation does not match",
+                icon: "error",
+                showDenyButton: false,
+                confirmButtonText: "Okay",
+            });
+            return false;
+        }
+
+        // var pattern = /^(?=.{5,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W])/;
+
+        // var checkval = pattern.test($("#npass").val());
+        // if (!checkval) {
+        //     Swal.fire({
+        //         title: "Password must contain At least one uppercase letter, one lowercase letter, one digit, one special symbol",
+        //         icon: "error",
+        //         showDenyButton: false,
+        //         confirmButtonText: "Okay",
+        //     });
+        //     return false;
+        // }
+    });
+    </script>
 
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
