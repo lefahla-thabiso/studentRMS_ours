@@ -2,7 +2,7 @@
 DEFINE('DBHost','localhost');
 DEFINE('DBUser', 'root');
 DEFINE('DBPass','');
-DEFINE('DBName','molapo_high_school');
+DEFINE('DBName','studentrms');
 DEFINE('DBCharset','utf8mb4');
 DEFINE('DBCollation', 'utf8_general_ci');
 DEFINE('DBPrefix', '');

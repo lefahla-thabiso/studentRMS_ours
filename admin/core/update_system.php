@@ -2,8 +2,10 @@
 chdir('../../');
 session_start();
 require_once('db/config.php');
+require_once "auditlog/audit.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION["account_id"] ?? 0;
 
 if($_FILES['company_logo']['name'] == "")  {
 try {
@@ -13,7 +15,10 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $stmt = $conn->prepare("UPDATE tbl_school SET name = ?");
 $stmt->execute([$_POST['name']]);
 
-
+  log_activity(
+                        $user_id,
+                        "Updating the system settings" 
+                    );
 $_SESSION['reply'] = array (array("success","System settings updated"));
 header("location:../system");
 

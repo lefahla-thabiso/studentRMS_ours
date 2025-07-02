@@ -3,8 +3,11 @@ chdir('../../');
 session_start();
 require_once('db/config.php');
 require_once('const/phpexcel/SimpleXLSX.php');
+require_once "auditlog/audit.php"; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION['account_id'] ?? 0;
+
 $file = $_FILES['file']['tmp_name'];
 $st_rec = 0;
 
@@ -55,7 +58,7 @@ $stmt->execute([$fname, $lname, $gender, $email, $pass, $role, $status]);
 $st_rec++;
 }
 
-
+log_activity($user_id, "Imported students from file");
 $_SESSION['reply'] = array (array("success",'Data import completed'));
 header("location:../teachers");
 

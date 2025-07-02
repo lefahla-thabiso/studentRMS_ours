@@ -2,6 +2,7 @@
 chdir("../../");
 session_start();
 require_once "db/config.php";
+require_once "auditlog/audit.php"; 
 
 // Generate registration number
 function generateStudentRegNo($conn) {
@@ -19,6 +20,8 @@ function generateStudentRegNo($conn) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $user_id = $_SESSION['account_id'] ?? 0;
     $reg_no = $_POST["regno"];
     $fname = ucfirst($_POST["fname"]);
     $mname = ucfirst($_POST["mname"]);
@@ -56,10 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([$email, $reg_no, $email, $reg_no]);
         $result = $stmt->fetchAll();
 
-        if (count($result) > 0) {
+        if (count($result) > 0) { 
             $_SESSION["reply"] = [
-                ["error", "Email or registration number is used"],
+                ["error", "Email or registration number is used " ],
             ];
+        log_activity($user_id, "email (". $email .") already used for registering " . ' ' . $fname . ' ' . $lname );
+
             header("location:../register_students");
         } else {
             if ($_FILES["image"]["name"] == "") {
@@ -103,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $pass,
                 $img,
             ]);
+            log_activity($user_id, "Registered student ". $reg_no ." successfully ");
 
             $_SESSION["reply"] = [
                 ["success", "Student registered successfully"],
@@ -110,6 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("location:../register_students");
         }
     } catch (PDOException $e) {
+        
         echo "Connection failed: " . $e->getMessage();
     }
 } else {

@@ -2,14 +2,16 @@
 chdir('../../');
 session_start();
 require_once('db/config.php');
+require_once "auditlog/audit.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION["account_id"] ?? 0;
 
 $reg_no = $_POST['id'];
 $fname = ucfirst($_POST['fname']);
 $mname = ucfirst($_POST['mname']);
 $lname = ucfirst($_POST['lname']);
-$email = $_POST['email'];
+$email = $_POST['email']; 
 $gender = $_POST['gender'];
 $class = $_POST['class'];
 $role = '3';
@@ -28,6 +30,12 @@ $stmt->execute([$email, $reg_no, $email, $reg_no]);
 $result = $stmt->fetchAll();
 
 if (count($result) > 0) {
+      log_activity(
+                        $user_id,
+                        "Student " .
+                            $reg_no .
+                            " entered already existing email" 
+                    );
 $_SESSION['reply'] = array (array("error",'Email is used'));
 header("location:../students");
 }else{

@@ -48,6 +48,8 @@ LEFT JOIN tbl_staff ON tbl_staff.id = tbl_login_sessions.staff WHERE tbl_login_s
                         $level = $row[10];
                         $status = $row[11];
 
+                        $_SESSION['account_id'] = $account_id;
+
                         if ($current_ip == $session_ip)
                         {
                             if ($status == "1")
@@ -109,6 +111,9 @@ LEFT JOIN tbl_staff ON tbl_staff.id = tbl_login_sessions.staff WHERE tbl_login_s
                         $img = $row[13];
                         $status = $row[14];
 
+                        $_SESSION['account_id'] = $account_id;
+                        
+                        
                         if ($current_ip == $session_ip)
                         {
                             if ($status == "1")
