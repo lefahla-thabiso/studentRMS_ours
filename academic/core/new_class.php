@@ -2,6 +2,10 @@
 chdir('../../');
 session_start();
 require_once('db/config.php');
+ require_once "auditlog/audit.php";
+
+
+$user_id = $_SESSION['account_id'] ?? 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -20,12 +24,14 @@ $result = $stmt->fetchAll();
 if (count($result) < 1) {
 $stmt = $conn->prepare("INSERT INTO tbl_classes (name, registration_date) VALUES (?,?)");
 $stmt->execute([$name, $reg_date]);
-
+ 
 $_SESSION['reply'] = array (array("success",'Class registered successfully'));
+log_activity($user_id, "Registering a grade : " . ' ' . $name);
+
 header("location:../classes");
 
 }else{
-
+log_activity($user_id, "Registering already registered grade");
 $_SESSION['reply'] = array (array("danger",'Class is already registered'));
 header("location:../classes");
 

@@ -2,8 +2,10 @@
 chdir('../../');
 session_start();
 require_once('db/config.php');
+require_once "auditlog/audit.php"; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION['account_id'] ?? 0;
 
 $fname = ucfirst($_POST['fname']);
 $lname = ucfirst($_POST['lname']);
@@ -22,12 +24,15 @@ $stmt->execute([$email, $email]);
 $result = $stmt->fetchAll();
 
 if (count($result) > 0) {
+        log_activity($user_id, "email (". $email .") already used for registering " . ' ' . $fname . ' ' . $lname );
+    
 $_SESSION['reply'] = array (array("error",'Email is already added'));
 header("location:../teachers");
 }else{
 
 $stmt = $conn->prepare("INSERT INTO tbl_staff (fname, lname, gender, email, password, level, status) VALUES (?,?,?,?,?,?,?)");
 $stmt->execute([$fname, $lname, $gender, $email, $pass, $role, $status]);
+        log_activity($user_id, "Teacher (". $fname .' '. $lname .") successfully registered");
 
 $_SESSION['reply'] = array (array("success",'Teacher registered successfully'));
 header("location:../teachers");

@@ -2,36 +2,41 @@
 chdir('../../');
 session_start();
 require_once('db/config.php');
+$user_id = $_SESSION['account_id'] ?? 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$user_id = $_SESSION['account_id'] ?? 0;
 
 $fname = ucfirst($_POST['fname']);
 $lname = ucfirst($_POST['lname']);
 $email = $_POST['email'];
-$gender = $_POST['gender'];
+$gender = $_POST['gender']; 
 $role = '1';
 $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $status = '1';
 
-try {
+try  {
 $conn = new PDO('mysql:host='.DBHost.';dbname='.DBName.';charset='.DBCharset.';collation='.DBCollation.';prefix='.DBPrefix.'', DBUser, DBPass);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+ 
 $stmt = $conn->prepare("SELECT email FROM tbl_staff WHERE email = ? UNION SELECT email FROM tbl_students WHERE email = ?");
 $stmt->execute([$email, $email]);
 $result = $stmt->fetchAll();
 
 if (count($result) > 0) {
+    log_activity($user_id, "Email ". $email ." already registered  ");
+
 $_SESSION['reply'] = array (array("error",'Email is already added'));
 header("location:../academic");
-}else{
+ }else{ 
 
 $stmt = $conn->prepare("INSERT INTO tbl_staff (fname, lname, gender, email, password, level, status) VALUES (?,?,?,?,?,?,?)");
 $stmt->execute([$fname, $lname, $gender, $email, $pass, $role, $status]);
+    log_activity($user_id, "Created academic user ". $fname .' '. $lname ." successfully ");
 
 $_SESSION['reply'] = array (array("success",'Academic account created successfully'));
 header("location:../academic");
-}
+} 
 
 }catch(PDOException $e)
 {
